@@ -1,0 +1,39 @@
+{
+    "name": "nuxt-app",
+    "private": true,
+    "type": "module",
+    "scripts": {
+        "build": "nuxt build",
+        "dev": "nuxt dev -p 3030",
+        "generate": "nuxt generate",
+        "preview": "nuxt preview",
+        "postinstall": "nuxt prepare",
+        "lint": "eslint . -c .eslintrc.cjs --fix --ext .ts,.js,.vue,.tsx,.jsx"
+    },
+    "dependencies": {
+        "@tanstack/vue-query": "^5.51.15",
+        "@tanstack/vue-query-devtools": "^5.51.15",
+        "@vee-validate/valibot": "^4.13.2",
+        "nuxt": "^3.12.4",
+        "nuxt-swiper": "^1.2.2",
+        "valibot": "^0.37.0",
+        "vue": "latest"
+    },
+    "devDependencies": {
+        "@nuxt/image": "^1.7.0",
+        "@nuxt/ui": "^2.18.3",
+        "@nuxtjs/google-fonts": "^3.2.0",
+        "@typescript-eslint/eslint-plugin": "^6.7.5",
+        "@typescript-eslint/parser": "^6.7.5",
+        "@vee-validate/nuxt": "^4.13.2",
+        "@vueuse/nuxt": "^10.11.0",
+        "eslint": "^8.51.0",
+        "eslint-import-resolver-typescript": "^3.6.1",
+        "eslint-plugin-import": "^2.28.1",
+        "eslint-plugin-promise": "^6.1.1",
+        "eslint-plugin-sonarjs": "^0.21.0",
+        "eslint-plugin-vue": "^9.17.0",
+        "nuxt-anchorscroll": "^1.0.3",
+        "nuxt-lodash": "^2.5.3"
+    }
+}
