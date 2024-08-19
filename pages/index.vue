@@ -1,18 +1,25 @@
+<script setup lang="ts">
+
+// ** useHooks
+const {
+    slider,
+    productCategories
+} = await useHomeData()
+</script>
+
 <template>
     <main>
         <HomePageCarousel :slider="slider" />
 
         <UContainer>
-            ??
+            <HomePageProductCategory
+                v-if="productCategories?.length"
+                :product-categories="productCategories"
+            />
             <!--
               <HomePageFlashDeals
               v-if="flashDeals?.product_flash_deals.length"
               :flash-deals="flashDeals"
-              />
-
-              <HomePageCategory
-              v-if="productCategories?.length"
-              :product-categories="productCategories"
               />
 
               <HomePageCollection

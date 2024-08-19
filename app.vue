@@ -1,7 +1,64 @@
 <script setup lang="ts">
 
-// ** Third Party Imports
-import { VueQueryDevtools } from '@tanstack/vue-query-devtools'
+// ** useHooks
+const config = useRuntimeConfig()
+const { data } = await useMetadata()
+
+// ** Methods
+const valueSystem = (key: string) => getValueBySlug(key, data.value?.system)
+
+// ** Computed
+const dataSystem = computed(() => {
+    return {
+        system_website_name: valueSystem('system_website_name') || 'Mydashop',
+        system_website_motto: valueSystem('system_website_motto') || 'Mua và bán',
+        system_website_favicon: valueSystem('system_website_favicon'),
+        system_meta_title: valueSystem('system_meta_title'),
+        system_meta_description: valueSystem('system_meta_description')
+    }
+})
+
+// ** Meta SEO
+useHead({
+    htmlAttrs: {
+        lang: 'vi',
+        class: 'nuxt-ui-scrollbars'
+    },
+    bodyAttrs: {
+        class: 'font-[Quicksand] bg-white text-sm overflow-x-hidden font-medium'
+    },
+    link: [
+        {
+            rel: 'canonical',
+            href: config.public.domainUrl as string
+        },
+        {
+            rel: 'icon'
+
+            // href: getPathImageFile(dataWebsiteFavicon.value)
+        }
+    ],
+    title: dataSystem.value.system_meta_title,
+    titleTemplate: titleChunk => {
+        return titleChunk ? `${titleChunk} · ${dataSystem.value.system_website_motto}` : dataSystem.value.system_website_name
+    }
+})
+
+useServerSeoMeta({
+    title: dataSystem.value.system_website_name,
+    robots: {
+        index: true,
+        follow: true
+    },
+    description: dataSystem.value.system_meta_description,
+    ogType: 'website',
+    ogUrl: config.public.domainUrl as string,
+    ogTitle: dataSystem.value.system_meta_title,
+    ogDescription: dataSystem.value.system_meta_description,
+    twitterTitle: dataSystem.value.system_meta_title,
+    twitterDescription: dataSystem.value.system_meta_description,
+    twitterCard: 'summary'
+})
 </script>
 
 <template>
