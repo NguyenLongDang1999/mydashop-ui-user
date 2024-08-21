@@ -1,3 +1,7 @@
+export const navigateProduct = (slug: string) => `/p/${slug}`
+
+export const navigateCategory = (slug: string) => `/c/${slug}`
+
 export const getPathImageFile = (name?: string) => {
     const config = useRuntimeConfig()
 

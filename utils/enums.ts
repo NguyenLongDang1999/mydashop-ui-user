@@ -7,6 +7,11 @@ export enum IMAGE {
     DEFAULT = '/default.jpg'
 }
 
+export enum SPECIAL_PRICE {
+    PRICE = 10,
+    PERCENT = 20
+}
+
 export enum HTTP_CODE {
     CONFLICT = 409,
     UNAUTHORIZED = 401

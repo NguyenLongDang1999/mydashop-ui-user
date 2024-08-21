@@ -5,6 +5,7 @@ import { useQuery } from '@tanstack/vue-query'
 interface IHomeData {
     slider: IHomeSlider[]
     product_categories_popular: IProductCategory[]
+    product_collection: any[]
 }
 
 // ** State
@@ -30,9 +31,11 @@ export const useHomeData = async () => {
     // ** Computed
     const slider = computed(() => data.value?.slider || [])
     const productCategories = computed(() => data.value?.product_categories_popular || [])
+    const productCollection = computed(() => data.value?.product_collection || [])
 
     return {
         slider,
-        productCategories
+        productCategories,
+        productCollection
     }
 }
