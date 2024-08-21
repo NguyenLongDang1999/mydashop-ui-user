@@ -16,6 +16,8 @@ const {
                 v-if="productCategories?.length"
                 :product-categories="productCategories"
             />
+
+            <HomePageProductCollection />
             <!--
               <HomePageFlashDeals
               v-if="flashDeals?.product_flash_deals.length"
