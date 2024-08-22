@@ -3,6 +3,7 @@
 // ** useHooks
 const {
     slider,
+    productFlashDeals,
     productCategories,
     productCollection
 } = await useHomeData()
@@ -13,6 +14,11 @@ const {
         <HomePageCarousel :slider="slider" />
 
         <UContainer>
+            <HomePageProductFlashDeals
+                v-if="productFlashDeals?.flashDealProducts.length"
+                :product-flash-deals="productFlashDeals"
+            />
+
             <HomePageProductCategory
                 v-if="productCategories?.length"
                 :product-categories="productCategories"
@@ -22,13 +28,6 @@ const {
                 v-if="productCollection?.length"
                 :product-collection="productCollection"
             />
-
-            <!--
-              <HomePageFlashDeals
-              v-if="flashDeals?.product_flash_deals.length"
-              :flash-deals="flashDeals"
-              />
-            -->
         </UContainer>
     </main>
 </template>
