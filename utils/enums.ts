@@ -1,5 +1,6 @@
 export enum ROUTE {
     HOME = 'home',
+    PRODUCT = 'product',
     SYSTEM_SETTINGS = 'system-settings',
     PRODUCT_CATEGORY = 'product-category'
 }
