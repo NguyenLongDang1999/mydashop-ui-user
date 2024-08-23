@@ -14,8 +14,6 @@ if (!data.value) {
 }
 
 // ** Data
-const result = ref()
-
 const productDescription: TabItem[] = [{
     slot: 'product-description',
     label: 'Chi Tiết Sản Phẩm'
@@ -72,7 +70,6 @@ useSEO({
 
                         <BaseProductInformation
                             :product="data"
-                            :result="result"
                             class="mt-3"
                         />
 
