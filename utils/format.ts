@@ -4,7 +4,7 @@ export const formatCurrency = (amount: number) => amount.toLocaleString('vi-VN',
     minimumFractionDigits: 0
 })
 
-export const formatSellingPrice = (row: any, quantity = 1, isFormat = true) => {
+export const formatSellingPrice = (row: IProduct, quantity = 1, isFormat = true) => {
     const formatPrice = Number(row.price)
     const formatSpecialPrice = Number(row.special_price)
 

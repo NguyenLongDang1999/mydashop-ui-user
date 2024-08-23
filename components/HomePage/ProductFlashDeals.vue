@@ -2,7 +2,7 @@
 
 // ** Props & Emits
 interface Props {
-    productFlashDeals: any
+    productFlashDeals: IProductFlashDeals
 }
 
 defineProps<Props>()
@@ -57,12 +57,11 @@ defineProps<Props>()
                     v-for="product in productFlashDeals.flashDealProducts"
                     :key="product.id"
                 >
-                    {{ product }}
                     <UCard
                         :ui="{
                             strategy: 'override',
                             shadow: '',
-                            base: 'overflow-hidden'
+                            base: 'overflow-hidden',
                         }"
                     >
                         <div class="grid grid-cols-12 gap-4">
@@ -80,7 +79,7 @@ defineProps<Props>()
                                     </h3>
                                 </NuxtLink>
 
-                                <BaseStarRatings
+                                <BaseProductStarRatings
                                     v-model="product.total_rating"
                                     class="mt-1 mb-2"
                                     disable-click

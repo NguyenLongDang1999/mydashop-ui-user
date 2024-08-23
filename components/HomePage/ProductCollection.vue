@@ -2,7 +2,7 @@
 
 // ** Props & Emits
 interface Props {
-    productCollection: any[]
+    productCollection: IProductCollection[]
 }
 
 defineProps<Props>()

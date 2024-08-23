@@ -2,7 +2,7 @@
 
 // ** Props & Emits
 interface Props {
-    product: any
+    product: IFlashDealProduct
 }
 
 defineProps<Props>()

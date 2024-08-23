@@ -15,7 +15,7 @@ const {
 
         <UContainer>
             <HomePageProductFlashDeals
-                v-if="productFlashDeals?.flashDealProducts.length"
+                v-if="productFlashDeals?.flashDealProducts?.length"
                 :product-flash-deals="productFlashDeals"
             />
 
