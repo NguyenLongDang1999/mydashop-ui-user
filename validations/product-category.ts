@@ -2,17 +2,20 @@
 import * as v from 'valibot'
 
 // ** Schema
-export const productCategoryBreadcrumb = v.object({
+export const productCategoryBase = {
     id: v.string(),
     slug: v.string(),
     name: v.string()
-})
+}
 
-const productCategory = v.object({
+export const productCategoryBreadcrumb = v.object(productCategoryBase)
+
+export const productCategory = v.object({
     ...productCategoryBreadcrumb.entries,
     description: v.string(),
     parent_id: v.string(),
     image_uri: v.string(),
+    children: v.array(v.object(productCategoryBase)),
     defaultOpen: v.optional(v.boolean())
 })
 

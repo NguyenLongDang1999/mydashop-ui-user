@@ -2,7 +2,8 @@ import type { RouterConfig } from '@nuxt/schema'
 
 export default {
     // https://router.vuejs.org/api/interfaces/routeroptions.html#routes
-    routes: () => [
+    routes: _routes => [
+        ..._routes,
         {
             name: 'product-categories',
             path: '/tat-ca-danh-muc',

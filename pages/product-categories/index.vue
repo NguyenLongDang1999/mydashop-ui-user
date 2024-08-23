@@ -17,43 +17,43 @@ const { dataList } = await useProductCategoryDataListNested()
                 class="mt-10"
             >
                 <div
-                    v-for="category in dataList"
-                    :key="category.id"
+                    v-for="productCategory in dataList"
+                    :key="productCategory.id"
                     class="mb-7"
                 >
                     <NuxtLink
-                        :to="navigateCategory(category.slug)"
+                        :to="navigateCategory(productCategory.slug)"
                         class="hover:text-primary mb-6 pb-3 flex gap-2 items-center border-b-2 border-gray-200 relative after:content-[''] after:absolute after:left-0 after:-bottom-0.5 after:w-20 after:border-b-2 after:border-primary"
                     >
                         <NuxtImg
-                            :src="category.image_uri"
-                            :alt="category.name"
-                            :title="category.name"
+                            :src="productCategory.image_uri"
+                            :alt="productCategory.name"
+                            :title="productCategory.name"
                             width="50"
                             height="50"
                             class="min-w-12 h-12 rounded-full object-cover"
                         />
 
                         <h3 class="text-lg font-semibold capitalize">
-                            {{ category.name }}
+                            {{ productCategory.name }}
                         </h3>
                     </NuxtLink>
 
                     <ul class="grid gap-8 grid-cols-12">
                         <li
-                            v-for="subCategory in category.children"
-                            :key="subCategory.id"
+                            v-for="subProductCategory in productCategory.children"
+                            :key="subProductCategory.id"
                             class="col-span-6 md:col-span-4"
                         >
                             <NuxtLink
-                                :to="navigateCategory(subCategory.slug)"
+                                :to="navigateCategory(subProductCategory.slug)"
                                 class="text-base line-clamp-1 text-gray-500 font-medium capitalize hover:text-primary"
                             >
-                                {{ subCategory.name }}
+                                {{ subProductCategory.name }}
                             </NuxtLink>
 
-                            <CategoryPageNested
-                                :categories="subCategory.children"
+                            <LazyProductCategoryPageNested
+                                :product-categories="subProductCategory.children"
                                 class="ml-3"
                             />
                         </li>
