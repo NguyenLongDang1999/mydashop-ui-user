@@ -1,6 +1,7 @@
 export enum ROUTE {
     HOME = 'home',
-    SYSTEM_SETTINGS = 'system-settings'
+    SYSTEM_SETTINGS = 'system-settings',
+    PRODUCT_CATEGORY = 'product-category'
 }
 
 export enum IMAGE {
