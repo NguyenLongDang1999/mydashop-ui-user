@@ -2,7 +2,7 @@
 
 // ** Props & Emits
 interface Props {
-    slider: ISlider[]
+    slider: IHomeSlider[]
 }
 
 defineProps<Props>()

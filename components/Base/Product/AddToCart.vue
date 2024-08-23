@@ -2,18 +2,16 @@
 
 // ** Props & Emits
 interface Props {
-    product: any
+    product: IFlashDealProduct
 }
 
 const props = defineProps<Props>()
 
-// const emits = defineEmits(['result'])
-
 // ** Data
 const result = ref()
+const quantity = ref<number>(1)
 const selectedAttributes = ref<{ [key: string]: string }>({})
 
-// ** Set default values for selectedAttributes on mount
 onMounted(() => {
     props.product.productAttributes.forEach(attribute => {
         if (attribute.product_attribute_values.length > 0) {
@@ -33,17 +31,15 @@ const handleProductAttributeValues = (productAttributeId: string, productAttribu
 const isSelected = (productAttributeId: string, productAttributeValueId: string) =>
     areValuesEqual(selectedAttributes.value[productAttributeId], productAttributeValueId)
 
-function findPriceAndSpecialPrice(
-    attributesMap
-) {
+const findPriceAndSpecialPrice = () => {
     for (const variant of props.product.productVariants) {
         let isMatch = true
 
-        for (const [attributeId, attributeValueId] of Object.entries(attributesMap)) {
+        for (const [attributeId, attributeValueId] of Object.entries(selectedAttributes.value)) {
             const matchingAttribute = variant.productVariantAttributeValues.find(
                 attrValue =>
-                    attrValue.productAttributeValues.productAttribute.id === attributeId &&
-                    attrValue.productAttributeValues.id === attributeValueId
+                    areValuesEqual(attrValue.productAttributeValues.productAttribute.id, attributeId) &&
+                    areValuesEqual(attrValue.productAttributeValues.id, attributeValueId)
             )
 
             if (!matchingAttribute) {
@@ -60,12 +56,15 @@ function findPriceAndSpecialPrice(
     return null
 }
 
-watchEffect(() => findPriceAndSpecialPrice(selectedAttributes.value))
+watchEffect(() => findPriceAndSpecialPrice())
 </script>
 
 <template>
     <div class="my-1">
-        <div class="flex flex-col gap-3 mb-3">
+        <div
+            v-if="product.productAttributes.length"
+            class="flex flex-col gap-3 mb-3"
+        >
             <div
                 v-for="product_attribute in product.productAttributes"
                 :key="product_attribute.id"
@@ -93,6 +92,34 @@ watchEffect(() => findPriceAndSpecialPrice(selectedAttributes.value))
                         </UButtonGroup>
                     </div>
                 </UFormGroup>
+            </div>
+        </div>
+
+        <BaseProductPrice
+            :price="Number(result?.price)"
+            :selling-price="formatSellingPrice(result).toString()"
+            class="text-lg"
+        />
+    </div>
+
+    <div class="grid grid-cols-12 gap-2 mt-4">
+        <div class="col-span-12">
+            <div class="flex gap-2">
+                <BaseProductQuantity v-model="quantity" />
+
+                <UButton
+                    color="white"
+                    icon="i-heroicons-heart"
+                    truncate
+                    size="lg"
+                    variant="ghost"
+                />
+
+                <UButton
+                    size="lg"
+                    icon="i-heroicons-shopping-bag"
+                    label="Thêm Giỏ Hàng"
+                />
             </div>
         </div>
     </div>

@@ -50,6 +50,38 @@ export const flashDealProduct = v.object({
         v.object({
             image_uri: v.string()
         })
+    ),
+    productAttributes: v.array(
+        v.object({
+            id: v.string(),
+            name: v.string(),
+            product_attribute_values: v.array(
+                v.object({
+                    id: v.string(),
+                    value: v.string()
+                })
+            )
+        })
+    ),
+    productVariants: v.array(
+        v.object({
+            id: v.string(),
+            price: v.string(),
+            special_price: v.string(),
+            special_price_type: v.number(),
+            productVariantAttributeValues: v.array(
+                v.object({
+                    productAttributeValues: v.object({
+                        id: v.string(),
+                        value: v.string(),
+                        productAttribute: v.object({
+                            id: v.string(),
+                            name: v.string()
+                        })
+                    })
+                })
+            )
+        })
     )
 })
 
