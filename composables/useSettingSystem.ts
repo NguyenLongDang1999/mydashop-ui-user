@@ -14,7 +14,7 @@ const pathKey = {
 
 export const useMetadata = async () => {
     // ** useHooks
-    const { data, suspense } = useQuery({
+    const { data, suspense } = useQuery<IMetadata>({
         queryKey: [queryKey.metadata],
         queryFn: () => useFetcher(pathKey.metadata)
     })

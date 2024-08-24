@@ -14,7 +14,8 @@ export const homeSlider = v.object({
 })
 
 export const metadata = v.object({
-    theme_colour: v.string()
+    theme_colour: v.string(),
+    system: v.array(systemSettings)
 })
 
 // ** Types

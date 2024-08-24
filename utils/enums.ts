@@ -30,3 +30,8 @@ export enum AUTH {
     ACCESS_TOKEN = 'accessTokenAdmin',
     REFRESH_TOKEN = 'refreshTokenAdmin',
 }
+
+export enum PAGE {
+    CURRENT = 1,
+    SIZE = 12
+}

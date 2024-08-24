@@ -33,15 +33,15 @@ const authNoLogin: DropdownItem[][] = [
                     <ul class="gap-x-8 hidden lg:flex">
                         <li
                             v-for="nav in navigation"
-                            :key="nav.slug"
+                            :key="nav.to"
                             class="relative"
                         >
                             <NuxtLink
                                 class="text-sm/6 font-semibold capitalize flex items-center gap-1 transition-colors hover:text-primary"
-                                :to="nav.slug"
+                                :to="nav.to"
                                 active-class="text-primary"
                             >
-                                {{ nav.title }}
+                                {{ nav.label }}
                             </NuxtLink>
                         </li>
                     </ul>

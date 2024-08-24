@@ -41,14 +41,13 @@ const props = defineProps<Props>()
         </div>
 
         <div class="mt-3 flex gap-1 flex-col">
-            <div class="flex items-center gap-1">
-                <UIcon
-                    name="i-heroicons-star-solid"
-                    class="w-4 h-4 text-yellow-400"
-                />
-
-                <span>{{ product.total_rating || 0 }}</span>
-            </div>
+            <BaseProductStarRatings
+                v-once
+                class="mt-2"
+                :model-value="Number(product.total_rating)"
+                :star-size="14"
+                disable-click
+            />
 
             <NuxtLink
                 :to="navigateCategory(product.productCategory.slug)"

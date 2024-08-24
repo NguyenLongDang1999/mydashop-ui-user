@@ -3,7 +3,6 @@ export default defineNuxtConfig({
     compatibilityDate: '2024-07-24',
     devtools: { enabled: true },
     modules: [
-        // '@stefanobartoletti/nuxt-social-share',
         '@nuxt/ui',
         '@nuxtjs/google-fonts',
         '@vee-validate/nuxt',
@@ -11,7 +10,8 @@ export default defineNuxtConfig({
         '@nuxt/image',
         'nuxt-swiper',
         'nuxt-lodash',
-        'nuxt-anchorscroll'
+        'nuxt-anchorscroll',
+        '@stefanobartoletti/nuxt-social-share'
     ],
     image: {
         provider: 'bunny',
@@ -41,5 +41,10 @@ export default defineNuxtConfig({
     },
     app: {
         pageTransition: { name: 'page', mode: 'out-in' }
+    },
+    routeRules: {
+        '/': { prerender: true },
+        '/p': { swr: true },
+        '/p/**': { swr: 3600 }
     }
 })

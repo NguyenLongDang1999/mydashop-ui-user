@@ -22,15 +22,6 @@ const productDescription: TabItem[] = [{
     label: 'Đánh Giá'
 }]
 
-if (data.value.technical_specifications?.length) {
-    const index = productDescription.findIndex(item => areValuesEqual(item.slot as string, 'product-description'))
-    const productSpecification: TabItem = { slot: 'product-specification', label: 'Thông Số Kỹ Thuật' }
-
-    if (index !== -1) {
-        productDescription.splice(index + 1, 0, productSpecification)
-    }
-}
-
 // ** Meta SEO
 useSEO({
     ...data.value
@@ -109,23 +100,33 @@ useSEO({
                             class="mt-10"
                         >
                             <template #product-description>
-                                <div
-                                    class="font-[Quicksand] text-left"
-                                    v-html="data.description"
-                                />
-                            </template>
+                                <template v-if="data.technical_specifications?.length">
+                                    <h3 class="text-lg capitalize mb-1 font-bold">
+                                        Thông số kỹ thuật
+                                    </h3>
 
-                            <template #product-specification>
-                                <ul class="border-gray-200 dark:border-gray-700 border rounded-md">
-                                    <li
-                                        v-for="specification in data.technical_specifications"
-                                        :key="specification.title"
-                                        class="flex border-b border-gray-200 dark:border-gray-700 last:border-b-0"
-                                    >
-                                        <span class="flex-1 capitalize font-semibold border-r border-gray-200 dark:border-gray-700 px-3 py-2">{{ specification.title }}</span>
-                                        <span class="flex-1 px-3 py-2">{{ specification.content }}</span>
-                                    </li>
-                                </ul>
+                                    <ul class="border-gray-200 dark:border-gray-700 border rounded-md mb-4">
+                                        <li
+                                            v-for="specification in data.technical_specifications"
+                                            :key="specification.title"
+                                            class="flex border-b border-gray-200 dark:border-gray-700 last:border-b-0"
+                                        >
+                                            <span class="flex-1 capitalize font-semibold border-r border-gray-200 dark:border-gray-700 px-3 py-2">{{ specification.title }}</span>
+                                            <span class="flex-1 px-3 py-2">{{ specification.content }}</span>
+                                        </li>
+                                    </ul>
+                                </template>
+
+                                <template v-if="data.description">
+                                    <h3 class="text-lg capitalize mb-1 font-bold">
+                                        Mô tả chi tiết
+                                    </h3>
+
+                                    <div
+                                        class="font-[Quicksand] text-left"
+                                        v-html="data.description"
+                                    />
+                                </template>
                             </template>
 
                             <template #product-comment>

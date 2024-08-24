@@ -8,7 +8,7 @@ interface Props {
 const props = defineProps<Props>()
 
 // ** Data
-const result = ref()
+const result = ref<IProductVariant>()
 const quantity = ref<number>(1)
 const selectedAttributes = ref<{ [key: string]: string }>({})
 
@@ -20,18 +20,8 @@ onMounted(() => {
     })
 })
 
-// ** Methods
-const handleProductAttributeValues = (productAttributeId: string, productAttributeValueId: string) => {
-    selectedAttributes.value = {
-        ...selectedAttributes.value,
-        [productAttributeId]: productAttributeValueId
-    }
-}
-
-const isSelected = (productAttributeId: string, productAttributeValueId: string) =>
-    areValuesEqual(selectedAttributes.value[productAttributeId], productAttributeValueId)
-
-const findPriceAndSpecialPrice = () => {
+// ** Watch
+watchEffect(() => {
     for (const variant of props.product.productVariants) {
         let isMatch = true
 
@@ -54,9 +44,18 @@ const findPriceAndSpecialPrice = () => {
     }
 
     return null
+})
+
+// ** Methods
+const handleProductAttributeValues = (productAttributeId: string, productAttributeValueId: string) => {
+    selectedAttributes.value = {
+        ...selectedAttributes.value,
+        [productAttributeId]: productAttributeValueId
+    }
 }
 
-watchEffect(() => findPriceAndSpecialPrice())
+const isSelected = (productAttributeId: string, productAttributeValueId: string) =>
+    areValuesEqual(selectedAttributes.value[productAttributeId], productAttributeValueId)
 </script>
 
 <template>

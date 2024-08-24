@@ -39,9 +39,8 @@ useHead({
         }
     ],
     title: dataSystem.value.system_meta_title,
-    titleTemplate: titleChunk => {
-        return titleChunk ? `${titleChunk} · ${dataSystem.value.system_website_motto}` : dataSystem.value.system_website_name
-    }
+    titleTemplate: titleChunk =>
+        titleChunk ? `${titleChunk} · ${dataSystem.value.system_website_motto}` : dataSystem.value.system_website_name
 })
 
 useServerSeoMeta({
@@ -63,7 +62,6 @@ useServerSeoMeta({
 
 <template>
     <NuxtLayout>
-        <VueQueryDevtools />
         <NuxtLoadingIndicator />
         <NuxtPage />
     </NuxtLayout>
