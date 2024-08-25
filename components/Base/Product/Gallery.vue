@@ -5,10 +5,13 @@ interface Props {
     product: IFlashDealProduct
 }
 
-defineProps<Props>()
+const props = defineProps<Props>()
 
 // ** Data
 const thumbsSwiper = ref()
+
+// ** Computed
+const productImages = computed(() => [props.product, ...props.product.productImages])
 </script>
 
 <template>
@@ -17,10 +20,13 @@ const thumbsSwiper = ref()
         :thumbs="{ swiper: thumbsSwiper }"
         :modules="[SwiperFreeMode, SwiperThumbs]"
     >
-        <SwiperSlide>
+        <SwiperSlide
+            v-for="data in productImages"
+            :key="data.image_uri"
+        >
             <NuxtImg
                 :alt="product.name"
-                :src="product.image_uri"
+                :src="data.image_uri"
                 class="rounded-md w-full"
             />
 
@@ -30,17 +36,6 @@ const thumbsSwiper = ref()
             >
                 {{ product.flashDeal.title }}
             </div>
-        </SwiperSlide>
-
-        <SwiperSlide
-            v-for="data in product.productImages"
-            :key="data.image_uri"
-        >
-            <NuxtImg
-                :alt="product.name"
-                :src="data.image_uri"
-                class="rounded-md w-full"
-            />
         </SwiperSlide>
     </Swiper>
 
@@ -53,17 +48,10 @@ const thumbsSwiper = ref()
         class="mt-3"
         @swiper="swiper => thumbsSwiper = swiper"
     >
-        <SwiperSlide>
-            <NuxtImg
-                :alt="product.name"
-                :src="product.image_uri"
-                class="rounded-md w-full"
-            />
-        </SwiperSlide>
-
         <SwiperSlide
-            v-for="data in product.productImages"
+            v-for="data in productImages"
             :key="data.image_uri"
+            class="[&.swiper-slide-thumb-active]:opacity-100 opacity-40"
         >
             <NuxtImg
                 :alt="product.name"
