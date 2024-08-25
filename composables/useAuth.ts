@@ -1,5 +1,5 @@
 // ** Third Party Imports
-import { useMutation } from '@tanstack/vue-query'
+import { useMutation, useQuery } from '@tanstack/vue-query'
 
 // ** Router Imports
 import type { RouteLocationRaw } from 'vue-router'
@@ -8,15 +8,19 @@ import type { RouteLocationRaw } from 'vue-router'
 const path = ref<string>(ROUTE.AUTH)
 
 const queryKey = {
-    signOut: `${path.value}-sign-out`
+    signOut: `${path.value}-sign-out`,
+    profile: `${path.value}-profile`
 }
 
 const pathKey = {
     signIn: `${path.value}/sign-in`,
     signUp: `${path.value}/sign-up`,
     signOut: `${path.value}/sign-out`,
+    profile: `${path.value}/profile`,
     forgotPassword: `${path.value}/forgot-password`
 }
+
+export const useAuth = () => useState<boolean>('isLoggedIn', () => false)
 
 export const useAuthLogin = () => useMutation<IAuthLoginForm, Error, IAuthLoginForm>({
     mutationFn: body => useFetcher(pathKey.signIn, {
@@ -25,6 +29,9 @@ export const useAuthLogin = () => useMutation<IAuthLoginForm, Error, IAuthLoginF
     }),
     onSuccess: () => {
         const { query } = useRoute()
+        const isLoggedIn = useAuth()
+
+        isLoggedIn.value = true
 
         nextTick(() => navigateTo(query.to as RouteLocationRaw))
         useNotification('Đăng nhập thành công!')
@@ -39,6 +46,9 @@ export const useAuthRegister = () => useMutation<IAuthRegisterForm, Error, IAuth
     }),
     onSuccess: () => {
         const { query } = useRoute()
+        const isLoggedIn = useAuth()
+
+        isLoggedIn.value = true
 
         nextTick(() => navigateTo(query.to as RouteLocationRaw))
         useNotification('Đăng nhập thành công!')
@@ -46,13 +56,11 @@ export const useAuthRegister = () => useMutation<IAuthRegisterForm, Error, IAuth
     onError: () => useNotificationError()
 })
 
-export const useAuthLogout = () => {
-    // return useQuery({
-    //     queryKey: [queryKey.signOut],
-    //     queryFn: () => useAuthFetcher(pathKey.signOut),
-    //     enabled: false
-    // })
-}
+export const useAuthLogout = () => useQuery({
+    queryKey: [queryKey.signOut],
+    queryFn: () => useFetcher(pathKey.signOut),
+    enabled: false
+})
 
 export const useAuthForgotPassword = () => useMutation<IAuthForgotPasswordForm, Error, IAuthForgotPasswordForm>({
     mutationFn: body => useFetcher(pathKey.forgotPassword, {
@@ -62,3 +70,21 @@ export const useAuthForgotPassword = () => useMutation<IAuthForgotPasswordForm, 
     onSuccess: () => useNotification('Thành Công!'),
     onError: () => useNotificationError()
 })
+
+export const useAuthProfile = () => {
+    // ** useHooks
+    const isLoggedIn = useAuth()
+
+    const { data } = useQuery<IAuthProfile>({
+        queryKey: [queryKey.profile],
+        queryFn: () => useFetcher(pathKey.profile),
+        enabled: computed(() => isLoggedIn.value)
+    })
+
+    // ** Computed
+    const profile = computed(() => data.value as IAuthProfile)
+
+    return {
+        data: profile
+    }
+}

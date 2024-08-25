@@ -88,11 +88,11 @@ const handle401Error = async () => {
 }
 
 const removeCookie = () => {
-    const accessTokenAdmin = useCookie('accessTokenAdmin')
-    const refreshTokenAdmin = useCookie('refreshTokenAdmin')
+    const accessToken = useCookie(AUTH.ACCESS_TOKEN)
+    const refreshToken = useCookie(AUTH.REFRESH_TOKEN)
 
-    accessTokenAdmin.value = null
-    refreshTokenAdmin.value = null
+    accessToken.value = null
+    refreshToken.value = null
 
     navigateTo('/dang-nhap')
 }

@@ -22,7 +22,7 @@ const onSubmit = handleSubmit(values => mutateAsync(values))
                 </h1>
 
                 <div class="mt-5 grid gap-4 grid-cols-12">
-                    <div class="xl:col-start-5 xl:col-span-4 lg:col-start-4 lg:col-span-6 md:col-start-3 md:col-span-8 col-span-12">
+                    <div class="xl:col-start-5 xl:col-span-4 lg:col-start-5 lg:col-span-4 md:col-start-4 md:col-span-6 col-span-12">
                         <UForm
                             :state="authLoginSchema"
                             @submit="onSubmit"
@@ -30,6 +30,7 @@ const onSubmit = handleSubmit(values => mutateAsync(values))
                             <div class="grid gap-4 grid-cols-12">
                                 <div class="col-span-12">
                                     <FormInput
+                                        model-value="longdang0412@gmail.com"
                                         :label="authLabel.email"
                                         name="email"
                                     />
@@ -37,6 +38,7 @@ const onSubmit = handleSubmit(values => mutateAsync(values))
 
                                 <div class="col-span-12">
                                     <FormInput
+                                        model-value="dang04121999"
                                         :label="authLabel.password"
                                         name="password"
                                         type="password"

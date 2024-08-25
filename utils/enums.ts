@@ -28,8 +28,8 @@ export enum MESSAGE {
 }
 
 export enum AUTH {
-    ACCESS_TOKEN = 'accessTokenAdmin',
-    REFRESH_TOKEN = 'refreshTokenAdmin',
+    ACCESS_TOKEN = 'accessToken',
+    REFRESH_TOKEN = 'refreshToken',
 }
 
 export enum PAGE {

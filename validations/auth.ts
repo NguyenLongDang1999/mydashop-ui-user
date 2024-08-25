@@ -67,6 +67,16 @@ export const authForgotPassword = v.object({
     )
 })
 
+export const authProfile = v.object({
+    id: v.string(),
+    name: v.string(),
+    email: v.string(),
+    phone: v.string(),
+    address: v.string(),
+    image_uri: v.string(),
+    email_verified: v.string()
+})
+
 export const authLoginSchema = toTypedSchema(authLogin)
 
 export const authRegisterSchema = toTypedSchema(authRegister)
@@ -79,3 +89,5 @@ export type IAuthLoginForm = v.InferInput<typeof authLogin>
 export type IAuthRegisterForm = v.InferInput<typeof authRegister>
 
 export type IAuthForgotPasswordForm = v.InferInput<typeof authForgotPassword>
+
+export type IAuthProfile = v.InferInput<typeof authProfile>
