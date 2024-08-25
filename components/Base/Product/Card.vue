@@ -34,7 +34,7 @@ const props = defineProps<Props>()
 
             <div
                 v-if="product.flashDeal"
-                class="absolute bg-red-600 text-white px-2 py-1 text-xs rounded-br-xl left-0 top-0 truncate max-w-40"
+                class="absolute bg-red-600 text-white px-2 py-1 text-xs rounded-br-md left-0 top-0 truncate max-w-40"
             >
                 {{ product.flashDeal.title }}
             </div>

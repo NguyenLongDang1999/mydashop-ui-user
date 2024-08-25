@@ -23,6 +23,21 @@ export default {
             name: 'product-retrieve',
             path: '/p/:slug',
             component: () => import('~/pages/products/[slug].vue').then(r => r.default || r)
+        },
+        {
+            name: 'auth-login',
+            path: '/dang-nhap',
+            component: () => import('~/pages/auth/login.vue').then(r => r.default || r)
+        },
+        {
+            name: 'auth-register',
+            path: '/dang-ky',
+            component: () => import('~/pages/auth/register.vue').then(r => r.default || r)
+        },
+        {
+            name: 'auth-forgot-password',
+            path: '/quen-mat-khau',
+            component: () => import('~/pages/auth/forgot-password.vue').then(r => r.default || r)
         }
     ]
 } satisfies RouterConfig

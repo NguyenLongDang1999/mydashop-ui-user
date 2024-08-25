@@ -55,6 +55,10 @@ export const flashDealProduct = v.object({
     image_uri: v.string(),
     total_rating: v.number(),
     short_description: v.string(),
+    flashDeal: v.object({
+        id: v.string(),
+        title: v.string()
+    }),
     productBrand: v.object({
         id: v.string(),
         slug: v.string(),
