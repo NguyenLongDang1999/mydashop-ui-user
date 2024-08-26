@@ -23,6 +23,7 @@
     "@nuxt/image": "^1.7.0",
     "@nuxt/ui": "^2.18.3",
     "@nuxtjs/google-fonts": "^3.2.0",
+    "@sidebase/nuxt-auth": "^0.9.1",
     "@stefanobartoletti/nuxt-social-share": "^1.0.0",
     "@typescript-eslint/eslint-plugin": "^6.7.5",
     "@typescript-eslint/parser": "^6.7.5",

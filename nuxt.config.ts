@@ -11,6 +11,7 @@ export default defineNuxtConfig({
         'nuxt-swiper',
         'nuxt-lodash',
         'nuxt-anchorscroll',
+        '@sidebase/nuxt-auth',
         '@stefanobartoletti/nuxt-social-share'
     ],
     image: {
@@ -46,5 +47,19 @@ export default defineNuxtConfig({
         '/': { prerender: true },
         '/p': { swr: true },
         '/p/**': { swr: 3600 }
+    },
+    auth: {
+        baseURL: `${process.env.NUXT_PUBLIC_API_BASE}/`,
+        provider: {
+            type: 'local',
+            endpoints: {
+                signIn: {
+                    path: 'auth/sign-in', method: 'post'
+                }
+            }
+        },
+        globalAppMiddleware: {
+            isEnabled: false
+        }
     }
 })

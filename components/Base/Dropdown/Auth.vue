@@ -7,7 +7,7 @@ import type { DropdownItem } from '#ui/types'
 const { fullPath } = useRoute()
 const { data } = useAuthProfile()
 const { refetch } = useAuthLogout()
-const isLoggedIn = useAuth()
+const isLoggedIn = useAuthTest()
 
 // ** Watch
 const accessToken = useCookie('accessToken')

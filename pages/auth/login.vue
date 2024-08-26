@@ -1,20 +1,36 @@
 <script setup lang="ts">
 
+definePageMeta({
+    auth: {
+        unauthenticatedOnly: true,
+        navigateAuthenticatedTo: '/'
+    }
+})
+
 // ** useHooks
 const { handleSubmit } = useForm<IAuthLoginForm>({
     validationSchema: authLoginSchema
 })
 
-const { isPending, mutateAsync } = useAuthLogin()
+const { signIn, status, token, data } = useAuth()
+
+// const { isPending, mutateAsync } = useAuthLogin()
 
 // ** Methods
-const onSubmit = handleSubmit(values => mutateAsync(values))
+const onSubmit = handleSubmit(async values => {
+    return await signIn({
+        ...values
+    })
+})
+
+// const onSubmit = handleSubmit(values => mutateAsync(values))
 </script>
 
 <template>
     <main>
         <BaseBreadcrumbs title="Đăng Nhập" />
 
+        {{ data }}
         <UContainer>
             <section class="mt-10">
                 <h1 class="text-center uppercase font-bold md:text-3xl sm:text-2xl text-xl">

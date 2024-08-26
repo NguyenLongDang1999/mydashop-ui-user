@@ -20,7 +20,7 @@ const pathKey = {
     forgotPassword: `${path.value}/forgot-password`
 }
 
-export const useAuth = () => useState<boolean>('isLoggedIn', () => false)
+export const useAuthTest = () => useState<boolean>('isLoggedIn', () => false)
 
 export const useAuthLogin = () => useMutation<IAuthLoginForm, Error, IAuthLoginForm>({
     mutationFn: body => useFetcher(pathKey.signIn, {
@@ -29,7 +29,7 @@ export const useAuthLogin = () => useMutation<IAuthLoginForm, Error, IAuthLoginF
     }),
     onSuccess: () => {
         const { query } = useRoute()
-        const isLoggedIn = useAuth()
+        const isLoggedIn = useAuthTest()
 
         isLoggedIn.value = true
 
@@ -46,7 +46,7 @@ export const useAuthRegister = () => useMutation<IAuthRegisterForm, Error, IAuth
     }),
     onSuccess: () => {
         const { query } = useRoute()
-        const isLoggedIn = useAuth()
+        const isLoggedIn = useAuthTest()
 
         isLoggedIn.value = true
 
@@ -73,7 +73,7 @@ export const useAuthForgotPassword = () => useMutation<IAuthForgotPasswordForm, 
 
 export const useAuthProfile = () => {
     // ** useHooks
-    const isLoggedIn = useAuth()
+    const isLoggedIn = useAuthTest()
 
     const { data } = useQuery<IAuthProfile>({
         queryKey: [queryKey.profile],
