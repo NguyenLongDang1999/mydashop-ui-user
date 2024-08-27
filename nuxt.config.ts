@@ -75,6 +75,7 @@ export default defineNuxtConfig({
             },
             token: {
                 signInResponseTokenPointer: '/token/accessToken',
+                maxAgeInSeconds: 20,
                 cookieName: 'accessToken',
                 secureCookieAttribute: process.env.NODE_ENV === 'production',
                 httpOnlyCookieAttribute: process.env.NODE_ENV === 'production'
@@ -82,10 +83,10 @@ export default defineNuxtConfig({
             refresh: {
                 isEnabled: true,
                 endpoint: {
-                    method: 'get',
+                    method: 'post',
                     path: 'auth/refresh'
                 },
-                refreshOnlyToken: true,
+                refreshOnlyToken: false,
                 token: {
                     signInResponseRefreshTokenPointer: '/token/refreshToken',
                     cookieName: 'refreshToken',
