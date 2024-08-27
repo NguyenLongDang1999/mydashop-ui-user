@@ -12,25 +12,19 @@ const { handleSubmit } = useForm<IAuthLoginForm>({
     validationSchema: authLoginSchema
 })
 
-const { signIn, status, token, data } = useAuth()
-
-// const { isPending, mutateAsync } = useAuthLogin()
+const { redirectedFrom } = useRoute()
+const { signIn } = useAuth()
 
 // ** Methods
-const onSubmit = handleSubmit(async values => {
-    return await signIn({
-        ...values
-    })
-})
-
-// const onSubmit = handleSubmit(values => mutateAsync(values))
+const onSubmit = handleSubmit(values => signIn(values, {
+    callbackUrl: redirectedFrom ? redirectedFrom.fullPath : '/'
+}))
 </script>
 
 <template>
     <main>
         <BaseBreadcrumbs title="Đăng Nhập" />
 
-        {{ data }}
         <UContainer>
             <section class="mt-10">
                 <h1 class="text-center uppercase font-bold md:text-3xl sm:text-2xl text-xl">

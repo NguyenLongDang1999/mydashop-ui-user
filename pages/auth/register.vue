@@ -5,10 +5,13 @@ const { handleSubmit } = useForm<IAuthRegisterForm>({
     validationSchema: authRegisterSchema
 })
 
-const { isPending, mutateAsync } = useAuthRegister()
+const { redirectedFrom } = useRoute()
+const { signUp } = useAuth()
 
 // ** Methods
-const onSubmit = handleSubmit(values => mutateAsync(values))
+const onSubmit = handleSubmit(values => signUp(values, {
+    callbackUrl: redirectedFrom ? redirectedFrom.fullPath : '/'
+}))
 </script>
 
 <template>

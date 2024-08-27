@@ -50,11 +50,48 @@ export default defineNuxtConfig({
     },
     auth: {
         baseURL: `${process.env.NUXT_PUBLIC_API_BASE}/`,
+        sessionRefresh: {
+            enableOnWindowFocus: false,
+            enablePeriodically: false
+        },
         provider: {
             type: 'local',
             endpoints: {
+                getSession: {
+                    path: 'auth/session'
+                },
                 signIn: {
-                    path: 'auth/sign-in', method: 'post'
+                    method: 'post',
+                    path: 'auth/sign-in'
+                },
+                signUp: {
+                    method: 'post',
+                    path: 'auth/sign-up'
+                },
+                signOut: {
+                    method: 'get',
+                    path: 'auth/sign-out'
+                }
+            },
+            token: {
+                signInResponseTokenPointer: '/token/accessToken',
+                cookieName: 'accessToken',
+                secureCookieAttribute: process.env.NODE_ENV === 'production',
+                httpOnlyCookieAttribute: process.env.NODE_ENV === 'production'
+            },
+            refresh: {
+                isEnabled: true,
+                endpoint: {
+                    method: 'get',
+                    path: 'auth/refresh'
+                },
+                refreshOnlyToken: true,
+                token: {
+                    signInResponseRefreshTokenPointer: '/token/refreshToken',
+                    cookieName: 'refreshToken',
+                    maxAgeInSeconds: 7 * 24 * 60 * 60,
+                    secureCookieAttribute: process.env.NODE_ENV === 'production',
+                    httpOnlyCookieAttribute: process.env.NODE_ENV === 'production'
                 }
             }
         },

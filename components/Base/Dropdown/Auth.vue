@@ -5,17 +5,8 @@ import type { DropdownItem } from '#ui/types'
 
 // ** useHooks
 const { fullPath } = useRoute()
-const { data } = useAuthProfile()
-const { refetch } = useAuthLogout()
-const isLoggedIn = useAuthTest()
-
-// ** Watch
-const accessToken = useCookie('accessToken')
-
-// ** Watch
-watch(accessToken, () => isLoggedIn.value = !!accessToken.value, {
-    immediate: true
-})
+const { data, signOut } = useAuth()
+const { data: user } = useAuthProfile()
 
 // ** Data
 const authLogined: DropdownItem[][]  = [
@@ -43,10 +34,7 @@ const authLogined: DropdownItem[][]  = [
         label: 'Đăng Xuất',
         icon: 'i-heroicons-arrow-left-on-rectangle',
         click: async () => {
-            await refetch()
-
-            isLoggedIn.value = false
-            nextTick(() => navigateTo('/dang-nhap'))
+            signOut({ callbackUrl: '/dang-nhap' })
             useNotification('Đăng xuất thành công')
         }
     }]
@@ -68,7 +56,7 @@ const authNoLogin: DropdownItem[][] = [
 
 <template>
     <UDropdown
-        v-if="isLoggedIn"
+        v-if="data"
         :items="authLogined"
         :ui="{ item: { disabled: 'cursor-text select-text', base: 'capitalize' } }"
         :popper="{ placement: 'bottom-start' }"
@@ -78,7 +66,7 @@ const authNoLogin: DropdownItem[][] = [
         <template #account>
             <div class="text-left w-full">
                 <p class="font-medium text-gray-900 dark:text-white">
-                    {{ data?.name }}
+                    {{ user?.name }}
                 </p>
             </div>
         </template>

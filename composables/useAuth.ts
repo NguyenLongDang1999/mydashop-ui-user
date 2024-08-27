@@ -13,7 +13,6 @@ const queryKey = {
 }
 
 const pathKey = {
-    signIn: `${path.value}/sign-in`,
     signUp: `${path.value}/sign-up`,
     signOut: `${path.value}/sign-out`,
     profile: `${path.value}/profile`,
@@ -21,23 +20,6 @@ const pathKey = {
 }
 
 export const useAuthTest = () => useState<boolean>('isLoggedIn', () => false)
-
-export const useAuthLogin = () => useMutation<IAuthLoginForm, Error, IAuthLoginForm>({
-    mutationFn: body => useFetcher(pathKey.signIn, {
-        method: 'POST',
-        body
-    }),
-    onSuccess: () => {
-        const { query } = useRoute()
-        const isLoggedIn = useAuthTest()
-
-        isLoggedIn.value = true
-
-        nextTick(() => navigateTo(query.to as RouteLocationRaw))
-        useNotification('Đăng nhập thành công!')
-    },
-    onError: () => useNotificationError()
-})
 
 export const useAuthRegister = () => useMutation<IAuthRegisterForm, Error, IAuthRegisterForm>({
     mutationFn: body => useFetcher(pathKey.signUp, {
@@ -56,12 +38,6 @@ export const useAuthRegister = () => useMutation<IAuthRegisterForm, Error, IAuth
     onError: () => useNotificationError()
 })
 
-export const useAuthLogout = () => useQuery({
-    queryKey: [queryKey.signOut],
-    queryFn: () => useFetcher(pathKey.signOut),
-    enabled: false
-})
-
 export const useAuthForgotPassword = () => useMutation<IAuthForgotPasswordForm, Error, IAuthForgotPasswordForm>({
     mutationFn: body => useFetcher(pathKey.forgotPassword, {
         method: 'POST',
@@ -73,12 +49,12 @@ export const useAuthForgotPassword = () => useMutation<IAuthForgotPasswordForm, 
 
 export const useAuthProfile = () => {
     // ** useHooks
-    const isLoggedIn = useAuthTest()
+    const { data: isLoggedIn } = useAuth()
 
     const { data } = useQuery<IAuthProfile>({
         queryKey: [queryKey.profile],
         queryFn: () => useFetcher(pathKey.profile),
-        enabled: computed(() => isLoggedIn.value)
+        enabled: computed(() => !!isLoggedIn.value)
     })
 
     // ** Computed
