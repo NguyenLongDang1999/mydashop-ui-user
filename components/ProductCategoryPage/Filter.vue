@@ -145,6 +145,7 @@ updateDefaultOpen(items)
         size="sm"
         block
         label="Xác Nhận"
+        class="sticky bottom-0"
         @click="handleFilter"
     />
 </template>

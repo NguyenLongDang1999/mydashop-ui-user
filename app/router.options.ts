@@ -43,6 +43,16 @@ export default {
             name: 'users-overview',
             path: '/thong-tin-tai-khoan',
             component: () => import('~/pages/users/overview.vue').then(r => r.default || r)
+        },
+        {
+            name: 'users-order-history',
+            path: '/thong-tin-tai-khoan/lich-su-don-hang',
+            component: () => import('~/pages/users/order-history.vue').then(r => r.default || r)
+        },
+        {
+            name: 'users-change-password',
+            path: '/thong-tin-tai-khoan/doi-mat-khau',
+            component: () => import('~/pages/users/change-password.vue').then(r => r.default || r)
         }
     ]
 } satisfies RouterConfig

@@ -1,6 +1,11 @@
 <template>
     <main>
-        <BaseBreadcrumbs title="Thông tin tài khoản" />
+        <BaseBreadcrumbs title="Lịch sử đơn hàng">
+            <BaseBreadcrumbsItem
+                :to="ROUTER.USERS_OVERVIEW"
+                title="Thông tin tài khoản"
+            />
+        </BaseBreadcrumbs>
 
         <UContainer>
             <section class="mt-10">
@@ -11,7 +16,7 @@
 
                     <div class="col-span-9">
                         <h2 class="capitalize text-2xl font-bold mb-7 text-primary">
-                            Thông tin chung
+                            Lịch sử đơn hàng
                         </h2>
                     </div>
                 </div>

@@ -17,6 +17,7 @@ const pathKey = {
     signUp: `${path.value}/sign-up`,
     signOut: `${path.value}/sign-out`,
     profile: `${path.value}/profile`,
+    changePassword: `${path.value}/change-password`,
     forgotPassword: `${path.value}/forgot-password`
 }
 
@@ -65,17 +66,15 @@ export const useAuthForgotPassword = () => useMutation<IAuthForgotPasswordForm, 
     onError: () => useNotificationError()
 })
 
-export const useAuthProfile = async () => {
+export const useAuthProfile = () => {
     // ** useHooks
     const isLoggedIn = useAuth()
 
-    const { data, suspense } = useQuery<IAuthProfile>({
+    const { data } = useQuery<IAuthProfile>({
         queryKey: [queryKey.profile],
         queryFn: () => useFetcher(pathKey.profile),
         enabled: computed(() => !!isLoggedIn.value)
     })
-
-    await suspense()
 
     // ** Computed
     const profile = computed(() => data.value as IAuthProfile)
@@ -89,4 +88,13 @@ export const useAuthLogout = () => useQuery({
     queryKey: [queryKey.signOut],
     queryFn: () => useFetcher(pathKey.signOut),
     enabled: false
+})
+
+export const useAuthChangePassword = () => useMutation<IAuthChangePasswordForm, Error, IAuthChangePasswordForm>({
+    mutationFn: body => useFetcher(pathKey.changePassword, {
+        method: 'POST',
+        body
+    }),
+    onSuccess: () => useNotification('Đổi mật khẩu thành Công!'),
+    onError: () => useNotificationError()
 })

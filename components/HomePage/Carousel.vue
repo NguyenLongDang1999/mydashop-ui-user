@@ -20,7 +20,10 @@ const creativeEffect = {
 </script>
 
 <template>
-    <section v-once>
+    <section
+        v-once
+        class="mt-5"
+    >
         <Swiper
             :modules="[SwiperAutoplay, SwiperEffectCube]"
             :slides-per-view="1"
@@ -43,7 +46,7 @@ const creativeEffect = {
                         :title="item.image_link"
                         width="1900"
                         height="500"
-                        class="w-full object-cover h-[500px]"
+                        class="w-full object-cover h-[500px] rounded-lg"
                     />
                 </NuxtLink>
             </SwiperSlide>

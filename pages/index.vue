@@ -11,9 +11,9 @@ const {
 
 <template>
     <main>
-        <HomePageCarousel :slider="slider" />
-
         <UContainer>
+            <HomePageCarousel :slider="slider" />
+
             <HomePageProductFlashDeals
                 v-if="productFlashDeals?.flashDealProducts?.length"
                 :product-flash-deals="productFlashDeals"

@@ -1,5 +1,8 @@
 <script setup lang="ts">
 
+// ** Utils Imports
+import { ratingOption } from '@/utils/options'
+
 // ** Types Imports
 import type { AccordionItem } from '#ui/types'
 

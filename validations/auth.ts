@@ -7,6 +7,7 @@ export const authLabel = {
     password: 'Mật khẩu',
     name: 'Họ và tên',
     phone: 'Số điện thoại',
+    old_password: 'Đổi mật khẩu',
     confirm_password: 'Nhập lại mật khẩu'
 }
 
@@ -77,11 +78,48 @@ export const authProfile = v.object({
     email_verified: v.string()
 })
 
+export const authResetPassword = v.pipe(
+    v.object({
+        password: v.pipe(
+            v.string(`${authLabel.password} không được bỏ trống.`),
+            v.nonEmpty(`${authLabel.password} không được bỏ trống.`),
+            v.minLength(6, `${authLabel.password} phải từ 6 - 20 ký tự.`),
+            v.maxLength(20, `${authLabel.password} phải từ 6 - 20 ký tự.`)
+        ),
+        confirm_password: v.pipe(
+            v.string(`${authLabel.confirm_password} không được bỏ trống.`),
+            v.nonEmpty(`${authLabel.confirm_password} không được bỏ trống.`)
+        )
+    }),
+    v.forward(
+        v.partialCheck(
+            [['password'], ['confirm_password']],
+            input => areValuesEqual(input.password, input.confirm_password),
+            `${authLabel.confirm_password} không trùng khớp.`
+        ),
+        ['confirm_password']
+    )
+)
+
+export const authChangePassword = v.object({
+    ...authResetPassword.entries,
+    old_password: v.pipe(
+        v.string(`${authLabel.password} không được bỏ trống.`),
+        v.nonEmpty(`${authLabel.password} không được bỏ trống.`),
+        v.minLength(6, `${authLabel.password} phải từ 6 - 20 ký tự.`),
+        v.maxLength(20, `${authLabel.password} phải từ 6 - 20 ký tự.`)
+    )
+})
+
 export const authLoginSchema = toTypedSchema(authLogin)
 
 export const authRegisterSchema = toTypedSchema(authRegister)
 
 export const authForgotPasswordSchema = toTypedSchema(authForgotPassword)
+
+export const authResetPasswordSchema = toTypedSchema(authResetPassword)
+
+export const authChangePasswordSchema = toTypedSchema(authChangePassword)
 
 // ** Types
 export type IAuthLoginForm = v.InferInput<typeof authLogin>
@@ -89,5 +127,9 @@ export type IAuthLoginForm = v.InferInput<typeof authLogin>
 export type IAuthRegisterForm = v.InferInput<typeof authRegister>
 
 export type IAuthForgotPasswordForm = v.InferInput<typeof authForgotPassword>
+
+export type IAuthResetPasswordForm = v.InferInput<typeof authResetPassword>
+
+export type IAuthChangePasswordForm = v.InferInput<typeof authChangePassword>
 
 export type IAuthProfile = v.InferInput<typeof authProfile>
