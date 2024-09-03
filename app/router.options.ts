@@ -38,6 +38,11 @@ export default {
             name: 'auth-forgot-password',
             path: '/quen-mat-khau',
             component: () => import('~/pages/auth/forgot-password.vue').then(r => r.default || r)
+        },
+        {
+            name: 'users-overview',
+            path: '/thong-tin-tai-khoan',
+            component: () => import('~/pages/users/overview.vue').then(r => r.default || r)
         }
     ]
 } satisfies RouterConfig

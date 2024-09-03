@@ -13,7 +13,7 @@ const productCategory = computed(() =>
         id: category.id,
         name: category.name,
         description: category.description,
-        link: category.slug,
+        link: navigateCategory(category.slug),
         imageSrc: category.image_uri
     })) || []
 )

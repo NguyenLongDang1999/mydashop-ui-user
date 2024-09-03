@@ -1,24 +1,14 @@
 <script setup lang="ts">
 
-definePageMeta({
-    auth: {
-        unauthenticatedOnly: true,
-        navigateAuthenticatedTo: '/'
-    }
-})
-
 // ** useHooks
 const { handleSubmit } = useForm<IAuthLoginForm>({
     validationSchema: authLoginSchema
 })
 
-const { redirectedFrom } = useRoute()
-const { signIn } = useAuth()
+const { isPending, mutateAsync } = useAuthLogin()
 
 // ** Methods
-const onSubmit = handleSubmit(values => signIn(values, {
-    callbackUrl: redirectedFrom ? redirectedFrom.fullPath : '/'
-}))
+const onSubmit = handleSubmit(values => mutateAsync(values))
 </script>
 
 <template>

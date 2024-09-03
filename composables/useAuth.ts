@@ -13,13 +13,31 @@ const queryKey = {
 }
 
 const pathKey = {
+    signIn: `${path.value}/sign-in`,
     signUp: `${path.value}/sign-up`,
     signOut: `${path.value}/sign-out`,
     profile: `${path.value}/profile`,
     forgotPassword: `${path.value}/forgot-password`
 }
 
-export const useAuthTest = () => useState<boolean>('isLoggedIn', () => false)
+export const useAuth = () => useState<boolean>('isLoggedIn', () => false)
+
+export const useAuthLogin = () => useMutation<IAuthLoginForm, Error, IAuthLoginForm>({
+    mutationFn: body => useFetcher(pathKey.signIn, {
+        method: 'POST',
+        body
+    }),
+    onSuccess: () => {
+        const { query } = useRoute()
+        const isLoggedIn = useAuth()
+
+        isLoggedIn.value = true
+
+        nextTick(() => navigateTo(query.to as RouteLocationRaw))
+        useNotification('Đăng nhập thành công!')
+    },
+    onError: () => useNotificationError()
+})
 
 export const useAuthRegister = () => useMutation<IAuthRegisterForm, Error, IAuthRegisterForm>({
     mutationFn: body => useFetcher(pathKey.signUp, {
@@ -28,7 +46,7 @@ export const useAuthRegister = () => useMutation<IAuthRegisterForm, Error, IAuth
     }),
     onSuccess: () => {
         const { query } = useRoute()
-        const isLoggedIn = useAuthTest()
+        const isLoggedIn = useAuth()
 
         isLoggedIn.value = true
 
@@ -47,15 +65,17 @@ export const useAuthForgotPassword = () => useMutation<IAuthForgotPasswordForm, 
     onError: () => useNotificationError()
 })
 
-export const useAuthProfile = () => {
+export const useAuthProfile = async () => {
     // ** useHooks
-    const { data: isLoggedIn } = useAuth()
+    const isLoggedIn = useAuth()
 
-    const { data } = useQuery<IAuthProfile>({
+    const { data, suspense } = useQuery<IAuthProfile>({
         queryKey: [queryKey.profile],
         queryFn: () => useFetcher(pathKey.profile),
         enabled: computed(() => !!isLoggedIn.value)
     })
+
+    await suspense()
 
     // ** Computed
     const profile = computed(() => data.value as IAuthProfile)
@@ -64,3 +84,9 @@ export const useAuthProfile = () => {
         data: profile
     }
 }
+
+export const useAuthLogout = () => useQuery({
+    queryKey: [queryKey.signOut],
+    queryFn: () => useFetcher(pathKey.signOut),
+    enabled: false
+})

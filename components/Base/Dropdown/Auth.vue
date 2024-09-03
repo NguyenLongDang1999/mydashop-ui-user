@@ -5,8 +5,17 @@ import type { DropdownItem } from '#ui/types'
 
 // ** useHooks
 const { fullPath } = useRoute()
-const { data, signOut } = useAuth()
-const { data: user } = useAuthProfile()
+const isLoggedIn = useAuth()
+const { refetch } = useAuthLogout()
+const { data: user } = await useAuthProfile()
+
+// ** Watch
+const accessToken = useCookie('accessToken')
+
+// ** Watch
+watch(accessToken, () => isLoggedIn.value = !!accessToken.value, {
+    immediate: true
+})
 
 // ** Data
 const authLogined: DropdownItem[][]  = [
@@ -34,7 +43,11 @@ const authLogined: DropdownItem[][]  = [
         label: 'Đăng Xuất',
         icon: 'i-heroicons-arrow-left-on-rectangle',
         click: async () => {
-            signOut({ callbackUrl: '/dang-nhap' })
+            await refetch()
+
+            isLoggedIn.value = false
+
+            nextTick(() => navigateTo('/dang-nhap'))
             useNotification('Đăng xuất thành công')
         }
     }]
@@ -56,7 +69,7 @@ const authNoLogin: DropdownItem[][] = [
 
 <template>
     <UDropdown
-        v-if="data"
+        v-if="isLoggedIn"
         :items="authLogined"
         :ui="{ item: { disabled: 'cursor-text select-text', base: 'capitalize' } }"
         :popper="{ placement: 'bottom-start' }"

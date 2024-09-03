@@ -36,3 +36,8 @@ export enum PAGE {
     CURRENT = 1,
     SIZE = 12
 }
+
+export enum ROUTER {
+    AUTH_LOGIN = '/dang-nhap',
+    USERS_OVERVIEW = '/thong-tin-tai-khoan'
+}

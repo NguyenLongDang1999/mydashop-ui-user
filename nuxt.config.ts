@@ -11,7 +11,6 @@ export default defineNuxtConfig({
         'nuxt-swiper',
         'nuxt-lodash',
         'nuxt-anchorscroll',
-        '@sidebase/nuxt-auth',
         '@stefanobartoletti/nuxt-social-share'
     ],
     image: {
@@ -46,58 +45,7 @@ export default defineNuxtConfig({
     routeRules: {
         '/': { prerender: true },
         '/p': { swr: true },
-        '/p/**': { swr: 3600 }
-    },
-    auth: {
-        baseURL: `${process.env.NUXT_PUBLIC_API_BASE}/`,
-        sessionRefresh: {
-            enableOnWindowFocus: false,
-            enablePeriodically: false
-        },
-        provider: {
-            type: 'local',
-            endpoints: {
-                getSession: {
-                    path: 'auth/session'
-                },
-                signIn: {
-                    method: 'post',
-                    path: 'auth/sign-in'
-                },
-                signUp: {
-                    method: 'post',
-                    path: 'auth/sign-up'
-                },
-                signOut: {
-                    method: 'get',
-                    path: 'auth/sign-out'
-                }
-            },
-            token: {
-                signInResponseTokenPointer: '/token/accessToken',
-                maxAgeInSeconds: 20,
-                cookieName: 'accessToken',
-                secureCookieAttribute: process.env.NODE_ENV === 'production',
-                httpOnlyCookieAttribute: process.env.NODE_ENV === 'production'
-            },
-            refresh: {
-                isEnabled: true,
-                endpoint: {
-                    method: 'post',
-                    path: 'auth/refresh'
-                },
-                refreshOnlyToken: false,
-                token: {
-                    signInResponseRefreshTokenPointer: '/token/refreshToken',
-                    cookieName: 'refreshToken',
-                    maxAgeInSeconds: 7 * 24 * 60 * 60,
-                    secureCookieAttribute: process.env.NODE_ENV === 'production',
-                    httpOnlyCookieAttribute: process.env.NODE_ENV === 'production'
-                }
-            }
-        },
-        globalAppMiddleware: {
-            isEnabled: false
-        }
+        '/p/**': { swr: 3600 },
+        '/thong-tin-tai-khoan': { ssr: false }
     }
 })
