@@ -8,7 +8,6 @@ interface Props {
 defineProps<Props>()
 </script>
 
-
 <template>
     <section
         v-once

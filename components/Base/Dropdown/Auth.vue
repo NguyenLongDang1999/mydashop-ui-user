@@ -7,7 +7,8 @@ import type { DropdownItem } from '#ui/types'
 const { fullPath } = useRoute()
 const isLoggedIn = useAuth()
 const { refetch } = useAuthLogout()
-const { data: user } = await useAuthProfile()
+
+// const { data: user } = await useAuthProfile()
 
 // ** Watch
 const accessToken = useCookie('accessToken')
@@ -45,7 +46,7 @@ const authLogined: DropdownItem[][]  = [
         click: async () => {
             await refetch()
 
-            isLoggedIn.value = false
+            // isLoggedIn.value = false
 
             nextTick(() => navigateTo('/dang-nhap'))
             useNotification('Đăng xuất thành công')

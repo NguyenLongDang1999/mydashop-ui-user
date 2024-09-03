@@ -7,7 +7,7 @@ export enum ROUTE {
 }
 
 export enum IMAGE {
-    DEFAULT = '/default.jpg'
+    DEFAULT = '/18.jpg'
 }
 
 export enum SPECIAL_PRICE {
