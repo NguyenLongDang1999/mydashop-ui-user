@@ -6,6 +6,27 @@ interface Props {
 }
 
 const props = defineProps<Props>()
+
+// ** useHooks
+const isLoggedIn = useAuth()
+const { mutateAsync: mutateAsyncWishlistCreate } = useWishlistCreate()
+const { mutateAsync: mutateAsyncWishlistDelete } = useWishlistDelete()
+
+const handleWishlist = () => {
+    if (isLoggedIn.value) {
+        if (!props.product.isWishlist) {
+            return mutateAsyncWishlistCreate({
+                product_id: props.product.id
+            })
+        } else {
+            return mutateAsyncWishlistDelete({
+                product_id: props.product.id
+            })
+        }
+    } else {
+        return navigateTo(ROUTER.AUTH_LOGIN)
+    }
+}
 </script>
 
 <template>
@@ -79,9 +100,10 @@ const props = defineProps<Props>()
                     <div class="basis-1/3">
                         <UButton
                             size="sm"
-                            color="white"
-                            icon="i-heroicons-heart"
+                            :color="product.isWishlist ? 'red' : 'white'"
+                            :icon="product.isWishlist ? 'i-heroicons-heart-solid' : 'i-heroicons-heart'"
                             variant="ghost"
+                            @click="handleWishlist"
                         />
                     </div>
 

@@ -3,7 +3,8 @@ export enum ROUTE {
     AUTH = 'auth',
     PRODUCT = 'product',
     SYSTEM_SETTINGS = 'system-settings',
-    PRODUCT_CATEGORY = 'product-category'
+    PRODUCT_CATEGORY = 'product-category',
+    WISHLIST = 'wishlist',
 }
 
 export enum IMAGE {
@@ -24,7 +25,9 @@ export enum MESSAGE {
     SUCCESS = 'Dữ liệu đã được lưu thành công!',
     ERROR = 'Đã xảy ra lỗi trong quá trình xử lý!',
     DELETE = 'Xóa dữ liệu thành công!',
-    CONFLICT = 'Dữ liệu này đã tồn tại trong hệ thống!'
+    CONFLICT = 'Dữ liệu này đã tồn tại trong hệ thống!',
+    WISHLISTS_CREATE = 'Sản phẩm đã được thêm vào danh sách yêu thích!',
+    WISHLISTS_DELETE = 'Sản phẩm đã được xoá khỏi danh sách yêu thích!'
 }
 
 export enum AUTH {

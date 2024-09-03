@@ -20,6 +20,12 @@ const pathKey = {
     data: `${path.value}/data`
 }
 
+export default function () {
+    return {
+        queryKey
+    }
+}
+
 export const useHomeData = async () => {
     // ** useHooks
     const { data, suspense } = useQuery<IHomeData>({

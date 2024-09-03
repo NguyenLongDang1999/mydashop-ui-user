@@ -15,6 +15,12 @@ const pathKey = {
     id: `${path.value}/$id`
 }
 
+export default function () {
+    return {
+        queryKey
+    }
+}
+
 export const useProductRetrieve = async () => {
     // ** useHooks
     const { params, path: routePath } = useRoute()

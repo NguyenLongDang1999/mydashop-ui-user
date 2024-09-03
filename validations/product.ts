@@ -17,6 +17,7 @@ export const product = v.object({
         slug: v.string(),
         name: v.string()
     }),
+    isWishlist: v.boolean(),
     price: v.string(),
     special_price: v.string(),
     special_price_type: v.number()

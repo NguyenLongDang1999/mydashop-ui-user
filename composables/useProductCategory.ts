@@ -17,6 +17,12 @@ const pathKey = {
     dataListNested: `${path.value}/data-list-nested`
 }
 
+export default function () {
+    return {
+        queryKey
+    }
+}
+
 export const useProductCategoryDataListNested = async () => {
     // ** useHooks
     const { data, suspense } = useQuery<IProductCategory[]>({
