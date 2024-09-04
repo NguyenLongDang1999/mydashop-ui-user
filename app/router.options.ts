@@ -53,6 +53,11 @@ export default {
             name: 'users-change-password',
             path: '/thong-tin-tai-khoan/doi-mat-khau',
             component: () => import('~/pages/users/change-password.vue').then(r => r.default || r)
+        },
+        {
+            name: 'users-wishlist',
+            path: '/thong-tin-tai-khoan/san-pham-yeu-thich',
+            component: () => import('~/pages/users/wishlist.vue').then(r => r.default || r)
         }
     ]
 } satisfies RouterConfig

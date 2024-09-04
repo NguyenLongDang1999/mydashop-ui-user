@@ -44,5 +44,6 @@ export enum ROUTER {
     AUTH_LOGIN = '/dang-nhap',
     USERS_OVERVIEW = '/thong-tin-tai-khoan',
     USERS_ORDER_HISTORY = '/thong-tin-tai-khoan/lich-su-don-hang',
-    USERS_CHANGE_PASSWORD = '/thong-tin-tai-khoan/doi-mat-khau'
+    USERS_CHANGE_PASSWORD = '/thong-tin-tai-khoan/doi-mat-khau',
+    USERS_WISHLIST = '/thong-tin-tai-khoan/san-pham-yeu-thich'
 }

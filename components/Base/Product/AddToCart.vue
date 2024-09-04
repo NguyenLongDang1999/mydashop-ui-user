@@ -20,6 +20,27 @@ onMounted(() => {
     })
 })
 
+// ** useHooks
+const isLoggedIn = useAuth()
+const { mutateAsync: mutateAsyncWishlistCreate } = useWishlistCreate()
+const { mutateAsync: mutateAsyncWishlistDelete } = useWishlistDelete()
+
+const handleWishlist = () => {
+    if (isLoggedIn.value) {
+        if (!props.product.isWishlist) {
+            return mutateAsyncWishlistCreate({
+                product_id: props.product.id
+            })
+        } else {
+            return mutateAsyncWishlistDelete({
+                product_id: props.product.id
+            })
+        }
+    } else {
+        return navigateTo(ROUTER.AUTH_LOGIN)
+    }
+}
+
 // ** Watch
 watchEffect(() => {
     for (const variant of props.product.productVariants) {
@@ -107,11 +128,12 @@ const isSelected = (productAttributeId: string, productAttributeValueId: string)
                 <BaseProductQuantity v-model="quantity" />
 
                 <UButton
-                    color="white"
-                    icon="i-heroicons-heart"
+                    :color="product.isWishlist ? 'red' : 'white'"
+                    :icon="product.isWishlist ? 'i-heroicons-heart-solid' : 'i-heroicons-heart'"
                     truncate
                     size="lg"
                     variant="ghost"
+                    @click="handleWishlist"
                 />
 
                 <UButton

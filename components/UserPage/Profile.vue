@@ -19,6 +19,11 @@ const navUserInfo = computed(() => ([
         href: ROUTER.USERS_CHANGE_PASSWORD,
         icon: 'i-heroicons-key',
         label: 'Đổi mật khẩu'
+    },
+    {
+        href: ROUTER.USERS_WISHLIST,
+        icon: 'i-heroicons-heart',
+        label: 'Sản phẩm yêu thích'
     }
 ]))
 </script>

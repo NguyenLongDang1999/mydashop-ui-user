@@ -1,5 +1,5 @@
 // ** Third Party Imports
-import { useMutation, useQueryClient } from '@tanstack/vue-query'
+import { useMutation, useQuery, useQueryClient } from '@tanstack/vue-query'
 
 // ** State
 const path = ref<string>(ROUTE.WISHLIST)
@@ -15,9 +15,23 @@ const pathKey = {
     delete: `${path.value}/$id`
 }
 
+export const useWishlistDataList = () => {
+    // ** useHooks
+    const { data, isFetching } = useQuery<IWishlistDataList[]>({
+        queryKey: [queryKey.dataTable],
+        queryFn: () => useFetcher(pathKey.index)
+    })
+
+    return {
+        isFetching,
+        dataTable: computed(() => data.value || [])
+    }
+}
+
 export const useWishlistCreate = () => {
     // ** useHooks
     const queryClient = useQueryClient()
+    const { queryKey: queryKeyHome } = useHome()
     const { queryKey: queryKeyProduct } = useProduct()
     const { queryKey: queryKeyProductCategory } = useProductCategory()
 
@@ -28,6 +42,7 @@ export const useWishlistCreate = () => {
         }),
         onSuccess: () => {
             queryClient.refetchQueries({ queryKey: [queryKey.dataList] })
+            queryClient.refetchQueries({ queryKey: [queryKeyHome.data] })
             queryClient.invalidateQueries({ queryKey: [queryKey.dataTable] })
             queryClient.invalidateQueries({ queryKey: [queryKeyProduct.retrieve] })
             queryClient.invalidateQueries({ queryKey: [queryKeyProductCategory.retrieve] })
