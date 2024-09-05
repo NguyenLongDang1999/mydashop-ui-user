@@ -95,7 +95,7 @@ const props = defineProps<Props>()
                                 size="sm"
                                 icon="i-heroicons-shopping-bag"
                                 class="capitalize"
-                                label="Mua Ngay"
+                                label="Thêm Giỏ Hàng"
                             />
                         </div>
                     </ClientOnly>

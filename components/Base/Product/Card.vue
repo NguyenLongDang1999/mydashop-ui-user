@@ -112,7 +112,7 @@ const handleWishlist = () => {
                             size="sm"
                             variant="outline"
                             block
-                            label="Mua Ngay"
+                            label="Thêm Giỏ Hàng"
                         />
                     </div>
                 </div>
