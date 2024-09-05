@@ -18,7 +18,8 @@ const pathKey = {
     signOut: `${path.value}/sign-out`,
     profile: `${path.value}/profile`,
     changePassword: `${path.value}/change-password`,
-    forgotPassword: `${path.value}/forgot-password`
+    forgotPassword: `${path.value}/forgot-password`,
+    resetPassword: `${path.value}/reset-password`
 }
 
 export const useAuth = () => useState<boolean>('isLoggedIn', () => false)
@@ -95,6 +96,25 @@ export const useAuthChangePassword = () => useMutation<IAuthChangePasswordForm, 
         method: 'POST',
         body
     }),
-    onSuccess: () => useNotification('Đổi mật khẩu thành Công!'),
+    onSuccess: () => useNotification('Thành Công!'),
     onError: () => useNotificationError()
 })
+
+export const useAuthResetPassword = () => {
+    const { query } = useRoute()
+
+    return useMutation<IAuthResetPasswordForm, Error, IAuthResetPasswordForm>({
+        mutationFn: body => useFetcher(pathKey.resetPassword, {
+            method: 'POST',
+            body,
+            params: {
+                token: query.token
+            }
+        }),
+        onSuccess: () => {
+            useNotification('Thành Công!')
+            nextTick(() => navigateTo(ROUTER.AUTH_LOGIN))
+        },
+        onError: () => useNotificationError()
+    })
+}

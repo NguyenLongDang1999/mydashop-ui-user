@@ -40,6 +40,11 @@ export default {
             component: () => import('~/pages/auth/forgot-password.vue').then(r => r.default || r)
         },
         {
+            name: 'auth-reset-password',
+            path: '/dat-lai-mat-khau',
+            component: () => import('~/pages/auth/reset-password.vue').then(r => r.default || r)
+        },
+        {
             name: 'users-overview',
             path: '/thong-tin-tai-khoan',
             component: () => import('~/pages/users/overview.vue').then(r => r.default || r)
