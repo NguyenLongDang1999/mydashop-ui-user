@@ -22,24 +22,9 @@ onMounted(() => {
 
 // ** useHooks
 const isLoggedIn = useAuth()
+const { mutateAsync } = useCartAdd()
 const { mutateAsync: mutateAsyncWishlistCreate } = useWishlistCreate()
 const { mutateAsync: mutateAsyncWishlistDelete } = useWishlistDelete()
-
-const handleWishlist = () => {
-    if (isLoggedIn.value) {
-        if (!props.product.isWishlist) {
-            return mutateAsyncWishlistCreate({
-                product_id: props.product.id
-            })
-        } else {
-            return mutateAsyncWishlistDelete({
-                product_id: props.product.id
-            })
-        }
-    } else {
-        return navigateTo(ROUTER.AUTH_LOGIN)
-    }
-}
 
 // ** Watch
 watchEffect(() => {
@@ -68,6 +53,27 @@ watchEffect(() => {
 })
 
 // ** Methods
+const handleWishlist = () => {
+    if (isLoggedIn.value) {
+        if (!props.product.isWishlist) {
+            return mutateAsyncWishlistCreate({
+                product_id: props.product.id
+            })
+        } else {
+            return mutateAsyncWishlistDelete({
+                product_id: props.product.id
+            })
+        }
+    } else {
+        return navigateTo(ROUTER.AUTH_LOGIN)
+    }
+}
+
+const handleAddToCart = () => mutateAsync({
+    product_variant_id: result.value?.id as string,
+    quantity: quantity.value
+})
+
 const handleProductAttributeValues = (productAttributeId: string, productAttributeValueId: string) => {
     selectedAttributes.value = {
         ...selectedAttributes.value,
@@ -139,7 +145,8 @@ const isSelected = (productAttributeId: string, productAttributeValueId: string)
                 <UButton
                     size="lg"
                     icon="i-heroicons-shopping-bag"
-                    label="Thêm Giỏ Hàng"
+                    label="Thêm Vào Giỏ"
+                    @click="handleAddToCart"
                 />
             </div>
         </div>

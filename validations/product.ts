@@ -17,6 +17,8 @@ export const product = v.object({
         slug: v.string(),
         name: v.string()
     }),
+    product_variant_id: v.string(),
+    product_type: v.number(),
     isWishlist: v.boolean(),
     price: v.string(),
     special_price: v.string(),
@@ -57,6 +59,7 @@ export const flashDealProduct = v.object({
     total_rating: v.number(),
     short_description: v.string(),
     isWishlist: v.boolean(),
+    product_type: v.number(),
     flashDeal: v.object({
         id: v.string(),
         title: v.string()

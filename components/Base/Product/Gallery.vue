@@ -11,7 +11,7 @@ const props = defineProps<Props>()
 const thumbsSwiper = ref()
 
 // ** Computed
-const productImages = computed(() => [props.product, ...props.product.productImages])
+const productImages = computed(() => [props.product, ...props.product.productImages || []])
 </script>
 
 <template>

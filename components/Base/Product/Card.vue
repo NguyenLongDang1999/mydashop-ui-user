@@ -9,9 +9,14 @@ const props = defineProps<Props>()
 
 // ** useHooks
 const isLoggedIn = useAuth()
+const { mutateAsync } = useCartAdd()
 const { mutateAsync: mutateAsyncWishlistCreate } = useWishlistCreate()
 const { mutateAsync: mutateAsyncWishlistDelete } = useWishlistDelete()
 
+// ** Computed
+const productTypeSingle = computed(() => areValuesEqual(props.product.product_type, PRODUCT_TYPE.SINGLE))
+
+// ** Methods
 const handleWishlist = () => {
     if (isLoggedIn.value) {
         if (!props.product.isWishlist) {
@@ -25,6 +30,17 @@ const handleWishlist = () => {
         }
     } else {
         return navigateTo(ROUTER.AUTH_LOGIN)
+    }
+}
+
+const handleAddToCart = () => {
+    if (productTypeSingle.value) {
+        return mutateAsync({
+            product_variant_id: props.product.product_variant_id,
+            quantity: 1
+        })
+    } else {
+        return navigateTo(navigateProduct(props.product.slug))
     }
 }
 </script>
@@ -112,7 +128,8 @@ const handleWishlist = () => {
                             size="sm"
                             variant="outline"
                             block
-                            label="Thêm Giỏ Hàng"
+                            :label="productTypeSingle ? 'Thêm Vào Giỏ' : 'Xem Lựa Chọn'"
+                            @click="handleAddToCart"
                         />
                     </div>
                 </div>

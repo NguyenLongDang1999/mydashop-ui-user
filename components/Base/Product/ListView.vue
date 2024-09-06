@@ -6,6 +6,43 @@ interface Props {
 }
 
 const props = defineProps<Props>()
+
+// ** useHooks
+const isLoggedIn = useAuth()
+const { mutateAsync } = useCartAdd()
+const { mutateAsync: mutateAsyncWishlistCreate } = useWishlistCreate()
+const { mutateAsync: mutateAsyncWishlistDelete } = useWishlistDelete()
+
+// ** Computed
+const productTypeSingle = computed(() => areValuesEqual(props.product.product_type, PRODUCT_TYPE.SINGLE))
+
+// ** Methods
+const handleWishlist = () => {
+    if (isLoggedIn.value) {
+        if (!props.product.isWishlist) {
+            return mutateAsyncWishlistCreate({
+                product_id: props.product.id
+            })
+        } else {
+            return mutateAsyncWishlistDelete({
+                product_id: props.product.id
+            })
+        }
+    } else {
+        return navigateTo(ROUTER.AUTH_LOGIN)
+    }
+}
+
+const handleAddToCart = () => {
+    if (productTypeSingle.value) {
+        return mutateAsync({
+            product_variant_id: props.product.product_variant_id,
+            quantity: 1
+        })
+    } else {
+        return navigateTo(navigateProduct(props.product.slug))
+    }
+}
 </script>
 
 <template>
@@ -86,16 +123,18 @@ const props = defineProps<Props>()
                         <div class="flex flex-wrap gap-2">
                             <UButton
                                 size="sm"
-                                color="white"
-                                icon="i-heroicons-heart"
+                                :color="product.isWishlist ? 'red' : 'white'"
+                                :icon="product.isWishlist ? 'i-heroicons-heart-solid' : 'i-heroicons-heart'"
                                 variant="ghost"
+                                @click="handleWishlist"
                             />
 
                             <UButton
                                 size="sm"
                                 icon="i-heroicons-shopping-bag"
                                 class="capitalize"
-                                label="Thêm Giỏ Hàng"
+                                :label="productTypeSingle ? 'Thêm Vào Giỏ' : 'Xem Lựa Chọn'"
+                                @click="handleAddToCart"
                             />
                         </div>
                     </ClientOnly>

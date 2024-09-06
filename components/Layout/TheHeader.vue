@@ -28,6 +28,7 @@
                 </nav>
 
                 <div class="flex items-center justify-end lg:flex-1 gap-1">
+                    <BaseSlideoverCart />
                     <BaseDropdownAuth />
                 </div>
             </div>

@@ -1,5 +1,6 @@
 export enum ROUTE {
     HOME = 'home',
+    CART = 'cart',
     AUTH = 'auth',
     PRODUCT = 'product',
     SYSTEM_SETTINGS = 'system-settings',
@@ -21,13 +22,20 @@ export enum HTTP_CODE {
     UNAUTHORIZED = 401
 }
 
+export enum PRODUCT_TYPE {
+    SINGLE = 10,
+    VARIANT = 20
+}
+
 export enum MESSAGE {
     SUCCESS = 'Dữ liệu đã được lưu thành công!',
     ERROR = 'Đã xảy ra lỗi trong quá trình xử lý!',
     DELETE = 'Xóa dữ liệu thành công!',
     CONFLICT = 'Dữ liệu này đã tồn tại trong hệ thống!',
     WISHLISTS_CREATE = 'Sản phẩm đã được thêm vào danh sách yêu thích!',
-    WISHLISTS_DELETE = 'Sản phẩm đã được xoá khỏi danh sách yêu thích!'
+    WISHLISTS_DELETE = 'Sản phẩm đã được xoá khỏi danh sách yêu thích!',
+    CART_CREATE = 'Sản phẩm đã được thêm vào giỏ hàng!',
+    CART_DELETE = 'Sản phẩm đã được xoá khỏi giỏ hàng!'
 }
 
 export enum AUTH {
