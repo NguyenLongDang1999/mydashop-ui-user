@@ -17,9 +17,15 @@ const onSubmit = handleSubmit(values => mutateAsync(values))
 
         <UContainer>
             <section class="mt-10">
-                <h1 class="text-center uppercase font-bold md:text-3xl sm:text-2xl text-xl">
-                    Đặt lại mật khẩu
-                </h1>
+                <div class="text-center">
+                    <h1 class="uppercase font-bold md:text-3xl sm:text-2xl text-xl">
+                        Đặt lại mật khẩu
+                    </h1>
+
+                    <p class="text-gray-500 mb-6 text-base mt-3 capitalize">
+                        Nhập mật khẩu mới của bạn bên dưới để bảo vệ tài khoản. Hãy chắc chắn rằng mật khẩu đủ mạnh và dễ nhớ.
+                    </p>
+                </div>
 
                 <div class="mt-5 grid gap-4 grid-cols-12">
                     <div class="xl:col-start-5 xl:col-span-4 lg:col-start-4 lg:col-span-6 md:col-start-3 md:col-span-8 col-span-12">

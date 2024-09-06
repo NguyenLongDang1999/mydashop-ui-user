@@ -36,7 +36,7 @@ provide('searchTemp', searchTemp)
                 <BaseProductCategoryTitle
                     icon="i-heroicons-building-storefront"
                     title="Cửa Hàng"
-                    description="Lorem ipsum dolor sit amet consectetur, adipisicing elit. Voluptatibus nisi sed rerum pariatur quasi quisquam omnis unde nemo deleniti tenetur neque quod architecto amet sunt, modi a dolores voluptate repellat."
+                    description="Khám phá những sản phẩm tinh tế, được tuyển chọn kỹ lưỡng để mang đến trải nghiệm mua sắm tuyệt vời và giá trị vượt trội cho bạn."
                 />
             </section>
 
