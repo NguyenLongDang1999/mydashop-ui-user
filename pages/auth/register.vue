@@ -1,17 +1,32 @@
 <script setup lang="ts">
 
+// ** Router Imports
+import type { RouteLocationRaw } from 'vue-router'
+
 // ** useHooks
-const { handleSubmit } = useForm<IAuthRegisterForm>({
+const { pathKey } = useAuthState()
+
+const { handleSubmit, isSubmitting } = useForm<IAuthRegisterForm>({
     validationSchema: authRegisterSchema
 })
 
-const { redirectedFrom } = useRoute()
-const { signUp } = useAuth()
-
 // ** Methods
-const onSubmit = handleSubmit(values => signUp(values, {
-    callbackUrl: redirectedFrom ? redirectedFrom.fullPath : '/'
-}))
+const onSubmit = handleSubmit(values =>
+    useFetchData(pathKey.signUp, {
+        method: 'POST',
+        body: values
+    })
+        .then(() => {
+            const { query } = useRoute()
+            const isLoggedIn = useAuth()
+
+            isLoggedIn.value = true
+
+            nextTick(() => navigateTo(query.to as RouteLocationRaw))
+            useNotification('Đăng nhập thành công!')
+        })
+        .catch(() => useNotificationError())
+)
 </script>
 
 <template>
@@ -27,7 +42,7 @@ const onSubmit = handleSubmit(values => signUp(values, {
                 <div class="mt-5 grid gap-4 grid-cols-12">
                     <div class="xl:col-start-5 xl:col-span-4 lg:col-start-4 lg:col-span-6 md:col-start-3 md:col-span-8 col-span-12">
                         <UForm
-                            :state="{}"
+                            :state="authRegisterSchema"
                             @submit="onSubmit"
                         >
                             <div class="grid gap-4 grid-cols-12">
@@ -73,7 +88,7 @@ const onSubmit = handleSubmit(values => signUp(values, {
                                         type="submit"
                                         size="lg"
                                         block
-                                        :loading="isPending"
+                                        :loading="isSubmitting"
                                     >
                                         ĐĂNG KÝ
                                     </UButton>

@@ -1,14 +1,32 @@
 <script setup lang="ts">
 
+// ** Router Imports
+import type { RouteLocationRaw } from 'vue-router'
+
 // ** useHooks
-const { handleSubmit } = useForm<IAuthLoginForm>({
+const { pathKey } = useAuthState()
+
+const { handleSubmit, isSubmitting } = useForm<IAuthLoginForm>({
     validationSchema: authLoginSchema
 })
 
-const { isPending, mutateAsync } = useAuthLogin()
-
 // ** Methods
-const onSubmit = handleSubmit(values => mutateAsync(values))
+const onSubmit = handleSubmit(values =>
+    useFetchData(pathKey.signIn, {
+        method: 'POST',
+        body: values
+    })
+        .then(async () => {
+            const { query } = useRoute()
+            const isLoggedIn = useAuth()
+
+            isLoggedIn.value = true
+
+            nextTick(() => navigateTo(query.to as RouteLocationRaw))
+            useNotification('Đăng nhập thành công!')
+        })
+        .catch(() => useNotificationError())
+)
 </script>
 
 <template>
@@ -67,7 +85,7 @@ const onSubmit = handleSubmit(values => mutateAsync(values))
                                         type="submit"
                                         size="lg"
                                         block
-                                        :loading="isPending"
+                                        :loading="isSubmitting"
                                     >
                                         ĐĂNG NHẬP
                                     </UButton>

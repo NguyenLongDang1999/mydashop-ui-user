@@ -1,14 +1,21 @@
 <script setup lang="ts">
 
 // ** useHooks
-const { handleSubmit } = useForm<IAuthForgotPasswordForm>({
+const { pathKey } = useAuthState()
+
+const { handleSubmit, isSubmitting } = useForm<IAuthForgotPasswordForm>({
     validationSchema: authForgotPasswordSchema
 })
 
-const { isPending, mutateAsync } = useAuthForgotPassword()
-
 // ** Methods
-const onSubmit = handleSubmit(values => mutateAsync(values))
+const onSubmit = handleSubmit(values =>
+    useFetchData(pathKey.forgotPassword, {
+        method: 'POST',
+        body: values
+    })
+        .then(() => useNotification())
+        .catch(() => useNotificationError())
+)
 </script>
 
 <template>
@@ -46,7 +53,7 @@ const onSubmit = handleSubmit(values => mutateAsync(values))
                                         type="submit"
                                         size="lg"
                                         block
-                                        :loading="isPending"
+                                        :loading="isSubmitting"
                                     >
                                         XÁC NHẬN
                                     </UButton>

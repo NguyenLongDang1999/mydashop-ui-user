@@ -32,7 +32,7 @@ const search = inject('search') as IProductCategoryFilter
                     <USkeleton
                         v-for="item in 4"
                         :key="item"
-                        class="h-3 w-full min-w-60"
+                        class="h-3 w-full"
                     />
                 </div>
             </div>

@@ -1,6 +1,3 @@
-// ** Third Party Imports
-import { useQuery } from '@tanstack/vue-query'
-
 // ** Interfaces
 interface IHomeData {
     slider: IHomeSlider[]
@@ -28,12 +25,9 @@ export default function () {
 
 export const useHomeData = async () => {
     // ** useHooks
-    const { data, suspense } = useQuery<IHomeData>({
-        queryKey: [queryKey.data],
-        queryFn: () => useFetcher(pathKey.data)
+    const { data } = await useFetchData<IHomeData>(pathKey.data, {
+        key: queryKey.data
     })
-
-    await suspense()
 
     // ** Computed
     const slider = computed(() => data.value?.slider || [])

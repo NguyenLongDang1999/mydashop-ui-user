@@ -1,14 +1,21 @@
 <script setup lang="ts">
 
 // ** useHooks
-const { handleSubmit } = useForm<IAuthResetPasswordForm>({
+const { pathKey } = useAuthState()
+
+const { handleSubmit, isSubmitting } = useForm<IAuthForgotPasswordForm>({
     validationSchema: authResetPasswordSchema
 })
 
-const { isPending, mutateAsync } = useAuthResetPassword()
-
 // ** Methods
-const onSubmit = handleSubmit(values => mutateAsync(values))
+const onSubmit = handleSubmit(values =>
+    useFetchData(pathKey.resetPassword, {
+        method: 'POST',
+        body: values
+    })
+        .then(() => useNotification('Đặt lại mật khẩu thành công!'))
+        .catch(() => useNotificationError())
+)
 </script>
 
 <template>
@@ -55,7 +62,7 @@ const onSubmit = handleSubmit(values => mutateAsync(values))
                                         type="submit"
                                         size="lg"
                                         block
-                                        :loading="isPending"
+                                        :loading="isSubmitting"
                                     >
                                         ĐẶT LẠI MẬT KHẨU
                                     </UButton>

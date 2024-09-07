@@ -4,9 +4,9 @@
 import type { DropdownItem } from '#ui/types'
 
 // ** useHooks
-const { fullPath } = useRoute()
 const isLoggedIn = useAuth()
-const { refetch } = useAuthLogout()
+const { pathKey } = useAuthState()
+const { fullPath } = useRoute()
 const { data: user } = useAuthProfile()
 
 // ** Watch
@@ -43,12 +43,14 @@ const authLogined: DropdownItem[][]  = [
         label: 'Đăng Xuất',
         icon: 'i-heroicons-arrow-left-on-rectangle',
         click: async () => {
-            await refetch()
+            useFetchData(pathKey.signOut)
+                .then(() => {
+                    isLoggedIn.value = false
 
-            isLoggedIn.value = false
-
-            nextTick(() => navigateTo('/dang-nhap'))
-            useNotification('Đăng xuất thành công')
+                    nextTick(() => navigateTo(ROUTER.AUTH_LOGIN))
+                    useNotification('Đăng xuất thành công')
+                })
+                .catch(() => useNotificationError())
         }
     }]
 ]

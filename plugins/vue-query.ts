@@ -1,46 +1,25 @@
-// ** Types Imports
-import type {
-    DehydratedState,
-    VueQueryPluginOptions
-} from '@tanstack/vue-query'
+export default defineNuxtPlugin(() => {
+    const config = useRuntimeConfig()
 
-// ** Plugins Imports
-import {
-    QueryClient,
-    VueQueryPlugin,
-    dehydrate,
-    hydrate
-} from '@tanstack/vue-query'
+    const $customFetch = $fetch.create({
+        baseURL: config.public.apiBase as string,
+        credentials: 'include',
+        keepalive: true,
+        onRequest({ options }) {
+            const access_token = useCookie(AUTH.ACCESS_TOKEN).value
 
-export default defineNuxtPlugin(nuxt => {
-    const vueQueryState = useState<DehydratedState | null>('vue-query')
-
-    const queryClient = new QueryClient({
-        defaultOptions: {
-            queries: {
-                refetchOnWindowFocus: false,
-                refetchOnMount: false,
-                refetchOnReconnect: false,
-                retry: 1,
-                staleTime: 5 * (60 * 1000),
-                gcTime: 10 * (60 * 1000)
-            },
-            mutations: {
+            if (access_token) {
+                options.headers = {
+                    ...options.headers,
+                    Authorization: `Bearer ${access_token}`
+                }
             }
         }
     })
 
-    const options: VueQueryPluginOptions = { queryClient }
-
-    nuxt.vueApp.use(VueQueryPlugin, options)
-
-    if (import.meta.server) {
-        nuxt.hooks.hook('app:rendered', () => {
-            vueQueryState.value = dehydrate(queryClient)
-        })
-    }
-
-    if (import.meta.client) {
-        hydrate(queryClient, vueQueryState.value)
+    return {
+        provide: {
+            customFetch: $customFetch
+        }
     }
 })

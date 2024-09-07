@@ -9,9 +9,8 @@ const props = defineProps<Props>()
 
 // ** useHooks
 const isLoggedIn = useAuth()
-const { mutateAsync } = useCartAdd()
-const { mutateAsync: mutateAsyncWishlistCreate } = useWishlistCreate()
-const { mutateAsync: mutateAsyncWishlistDelete } = useWishlistDelete()
+const { pathKey } = useCart()
+const { pathKey: pathKeyWishlist } = useWishlist()
 
 // ** Computed
 const productTypeSingle = computed(() => areValuesEqual(props.product.product_type, PRODUCT_TYPE.SINGLE))
@@ -20,13 +19,33 @@ const productTypeSingle = computed(() => areValuesEqual(props.product.product_ty
 const handleWishlist = () => {
     if (isLoggedIn.value) {
         if (!props.product.isWishlist) {
-            return mutateAsyncWishlistCreate({
-                product_id: props.product.id
+            return useFetchData(pathKeyWishlist.create, {
+                method: 'POST',
+                body: {
+                    product_id: props.product.id
+                }
             })
+                .then(async () => {
+                    const { queryKey } = useHome()
+
+                    await refreshNuxtData(queryKey.data)
+                    useNotification(MESSAGE.WISHLISTS_CREATE)
+                })
+                .catch(() => useNotificationError())
         } else {
-            return mutateAsyncWishlistDelete({
-                product_id: props.product.id
+            return useFetchData(pathQueryKey(pathKeyWishlist.delete, props.product.id), {
+                method: 'DELETE',
+                body: {
+                    product_id: props.product.id
+                }
             })
+                .then(async () => {
+                    const { queryKey } = useHome()
+
+                    await refreshNuxtData(queryKey.data)
+                    useNotification(MESSAGE.WISHLISTS_DELETE)
+                })
+                .catch(() => useNotificationError())
         }
     } else {
         return navigateTo(ROUTER.AUTH_LOGIN)
@@ -35,10 +54,15 @@ const handleWishlist = () => {
 
 const handleAddToCart = () => {
     if (productTypeSingle.value) {
-        return mutateAsync({
-            product_variant_id: props.product.product_variant_id,
-            quantity: 1
+        return useFetchData(pathKey.index, {
+            method: 'POST',
+            body: {
+                product_variant_id: props.product.product_variant_id,
+                quantity: 1
+            }
         })
+            .then(() => useNotification(MESSAGE.CART_CREATE))
+            .catch(() => useNotificationError())
     } else {
         return navigateTo(navigateProduct(props.product.slug))
     }

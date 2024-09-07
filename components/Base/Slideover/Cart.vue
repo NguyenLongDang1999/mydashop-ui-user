@@ -4,8 +4,15 @@
 const isOpen = ref<boolean>(false)
 
 // ** useHooks
+const { pathKey } = useCart()
 const { dataList, cartLength, cartTotal } = useCartList()
-const { isPending, mutateAsync } = useCartDelete()
+
+// ** Methods
+const handleDeleteCart = (product_id: string) => useFetchData(pathQueryKey(pathKey.id, product_id), {
+    method: 'DELETE'
+})
+    .then(() => useNotification(MESSAGE.CART_DELETE))
+    .catch(() => useNotificationError())
 </script>
 
 <template>
@@ -80,7 +87,7 @@ const { isPending, mutateAsync } = useCartDelete()
                                         size="2xs"
                                         :ui="{ rounded: 'rounded-full' }"
                                         :loading="isPending"
-                                        @click="mutateAsync(cart.id)"
+                                        @click="handleDeleteCart(cart.product.id)"
                                     />
                                 </div>
 

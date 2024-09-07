@@ -22,9 +22,8 @@ onMounted(() => {
 
 // ** useHooks
 const isLoggedIn = useAuth()
-const { mutateAsync } = useCartAdd()
-const { mutateAsync: mutateAsyncWishlistCreate } = useWishlistCreate()
-const { mutateAsync: mutateAsyncWishlistDelete } = useWishlistDelete()
+const { pathKey } = useCart()
+const { pathKey: pathKeyWishlist } = useWishlist()
 
 // ** Watch
 watchEffect(() => {
@@ -56,23 +55,48 @@ watchEffect(() => {
 const handleWishlist = () => {
     if (isLoggedIn.value) {
         if (!props.product.isWishlist) {
-            return mutateAsyncWishlistCreate({
-                product_id: props.product.id
+            return useFetchData(pathKeyWishlist.create, {
+                method: 'POST',
+                body: {
+                    product_id: props.product.id
+                }
             })
+                .then(async () => {
+                    const { queryKey } = useHome()
+
+                    await refreshNuxtData(queryKey.data)
+                    useNotification(MESSAGE.WISHLISTS_CREATE)
+                })
+                .catch(() => useNotificationError())
         } else {
-            return mutateAsyncWishlistDelete({
-                product_id: props.product.id
+            return useFetchData(pathQueryKey(pathKeyWishlist.delete, props.product.id), {
+                method: 'DELETE',
+                body: {
+                    product_id: props.product.id
+                }
             })
+                .then(async () => {
+                    const { queryKey } = useHome()
+
+                    await refreshNuxtData(queryKey.data)
+                    useNotification(MESSAGE.WISHLISTS_DELETE)
+                })
+                .catch(() => useNotificationError())
         }
     } else {
         return navigateTo(ROUTER.AUTH_LOGIN)
     }
 }
 
-const handleAddToCart = () => mutateAsync({
-    product_variant_id: result.value?.id as string,
-    quantity: quantity.value
+const handleAddToCart = () => useFetchData(pathKey.index, {
+    method: 'POST',
+    body: {
+        product_variant_id: result.value?.id as string,
+        quantity: quantity.value
+    }
 })
+    .then(() => useNotification(MESSAGE.CART_CREATE))
+    .catch(() => useNotificationError())
 
 const handleProductAttributeValues = (productAttributeId: string, productAttributeValueId: string) => {
     selectedAttributes.value = {

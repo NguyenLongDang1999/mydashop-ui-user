@@ -1,5 +1,4 @@
 // ** Third Party Imports
-import { keepPreviousData, useQuery } from '@tanstack/vue-query'
 import type { LocationQuery, LocationQueryValue } from 'vue-router'
 
 // ** State
@@ -25,12 +24,7 @@ export default function () {
 
 export const useProductCategoryDataListNested = async () => {
     // ** useHooks
-    const { data, suspense } = useQuery<IProductCategory[]>({
-        queryKey: [queryKey.dataListNested],
-        queryFn: () => useFetcher(pathKey.dataListNested)
-    })
-
-    await suspense()
+    const { data } = await useFetchData<IProductCategory[]>(pathKey.dataListNested)
 
     // ** Computed
     return {
@@ -46,13 +40,12 @@ export const useProductCategoryRetrieve = async () => {
     const search = reactive<IProductCategoryFilter>(initialSearch(query))
     const searchTemp = reactive<IProductCategoryFilter>(initialSearch(query))
 
-    const { data, isFetching, suspense } = useQuery<IProductCategoryRetrieve>({
-        queryKey: [queryKey.retrieve, params.slug, search],
-        queryFn: () => useFetcher(pathQueryKey(pathKey.id, params.slug), { params: search }),
-        placeholderData: keepPreviousData
+    const { data, status } = await useFetchData<IProductCategoryRetrieve>(pathQueryKey(pathKey.id, params.slug), {
+        params: search
     })
 
-    await suspense()
+    // ** Computed
+    const isFetching = computed(() => areValuesEqual(status.value, 'pending'))
 
     return {
         path: routePath,
@@ -73,13 +66,13 @@ export const useProductCategoryListShop = async () => {
     const search = reactive<IProductCategoryFilter>(initialSearch(query))
     const searchTemp = reactive<IProductCategoryFilter>(initialSearch(query))
 
-    const { data, isFetching, suspense } = useQuery<IProductCategoryListShop>({
-        queryKey: [queryKey.dataListShop, search],
-        queryFn: () => useFetcher(pathKey.dataListShop, { params: search }),
-        placeholderData: keepPreviousData
+    const { data, status } = await useFetchData<IProductCategoryListShop>(pathKey.dataListShop, {
+        params: search,
+        key: queryKey.dataListShop
     })
 
-    await suspense()
+    // ** Computed
+    const isFetching = computed(() => areValuesEqual(status.value, 'pending'))
 
     return {
         search,

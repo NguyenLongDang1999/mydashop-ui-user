@@ -12,6 +12,7 @@ export const product = v.object({
         title: v.string()
     }),
     total_rating: v.number(),
+    short_description: v.string(),
     productCategory: v.object({
         id: v.string(),
         slug: v.string(),

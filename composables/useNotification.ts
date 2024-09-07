@@ -1,4 +1,4 @@
-export default function (description = 'Thao tác thành công!') {
+export default function (description?: string) {
     // ** Hooks
     const toast = useToast()
 

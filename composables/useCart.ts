@@ -1,6 +1,3 @@
-// ** Third Party Imports
-import { useMutation, useQuery, useQueryClient } from '@tanstack/vue-query'
-
 // ** State
 const path = ref<string>(ROUTE.CART)
 
@@ -14,11 +11,16 @@ const pathKey = {
     dataList: `${path.value}/data-list`
 }
 
+export default function () {
+    return {
+        pathKey
+    }
+}
+
 export const useCartList = () => {
     // ** useHooks
-    const { data } = useQuery<ICart>({
-        queryKey: [queryKey.dataList],
-        queryFn: () => useFetcher(pathKey.dataList)
+    const { data } = useFetchData(pathKey.dataList, {
+        key: queryKey.dataList
     })
 
     // ** Computed
@@ -35,53 +37,3 @@ export const useCartList = () => {
     }
 }
 
-export const useCartAdd = () => {
-    const queryClient = useQueryClient()
-
-    return useMutation({
-        mutationFn: (body: ICartForm) => useFetcher(pathKey.index, {
-            method: 'POST',
-            body
-        }),
-        onSuccess: () => {
-            queryClient.refetchQueries({ queryKey: [queryKey.dataList] })
-            useNotification(MESSAGE.CART_CREATE)
-        },
-        onError: () => useNotificationError()
-    })
-}
-
-export const useCartUpdate = () => {
-    const queryClient = useQueryClient()
-
-    return useMutation({
-        mutationFn: (body: ICartQuantityForm[]) => useFetcher(pathKey.index, {
-            method: 'PATCH',
-            body: {
-                updatedData: body
-            }
-        }),
-        onSuccess: () => {
-            queryClient.refetchQueries({ queryKey: [queryKey.dataList] })
-        },
-        onError: () => useNotificationError()
-    })
-}
-
-export const useCartDelete = (purge = false) => {
-    const queryClient = useQueryClient()
-
-    return useMutation({
-        mutationFn: (body: string) => useFetcher(pathQueryKey(pathKey.id, body), {
-            method: 'DELETE',
-            params: {
-                force: purge || undefined
-            }
-        }),
-        onSuccess: () => {
-            queryClient.invalidateQueries({ queryKey: [queryKey.dataList] })
-            useNotification(MESSAGE.CART_DELETE)
-        },
-        onError: () => useNotificationError()
-    })
-}

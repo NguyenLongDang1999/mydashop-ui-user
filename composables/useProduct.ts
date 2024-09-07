@@ -1,6 +1,3 @@
-// ** Third Party Imports
-import { useQuery } from '@tanstack/vue-query'
-
 // ** Types Imports
 import type { IProductDetail } from '~/types/product.type'
 
@@ -24,13 +21,7 @@ export default function () {
 export const useProductRetrieve = async () => {
     // ** useHooks
     const { params, path: routePath } = useRoute()
-
-    const { data, suspense } = useQuery<IProductDetail>({
-        queryKey: [queryKey.retrieve, params.slug],
-        queryFn: () => useFetcher(pathQueryKey(pathKey.id, params.slug))
-    })
-
-    await suspense()
+    const { data } = await useFetchData<IProductDetail>(pathQueryKey(pathKey.id, params.slug))
 
     return {
         path: routePath,
