@@ -1,3 +1,9 @@
+<script setup lang="ts">
+
+// ** Computed
+const navigationMenu = computed(() => navigation)
+</script>
+
 <template>
     <header class="bg-white border-b -mb-px sticky top-0 z-50 border-gray-200 dark:border-gray-800">
         <UContainer>
@@ -12,7 +18,7 @@
                 <nav v-once>
                     <ul class="gap-x-8 hidden lg:flex">
                         <li
-                            v-for="nav in navigation"
+                            v-for="nav in navigationMenu"
                             :key="nav.to"
                             class="relative"
                         >
@@ -28,6 +34,7 @@
                 </nav>
 
                 <div class="flex items-center justify-end lg:flex-1 gap-1">
+                    <BaseSlideoverMenu />
                     <BaseSlideoverCart />
                     <BaseDropdownAuth />
                 </div>

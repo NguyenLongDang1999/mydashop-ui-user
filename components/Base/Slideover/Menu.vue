@@ -1,20 +1,10 @@
 <script setup lang="ts">
 
-// ** useHooks
-const { data } = await useMetadata()
-
 // ** Data
 const isOpen = ref<boolean>(false)
 
-// ** Methods
-const valueSystem = (key: string) => getValueBySlug(key, data.value?.system)
-
 // ** Computed
-const dataSystem = computed(() => ({
-    system_menu_navigation: valueSystem('system_menu_navigation')
-}))
-
-const navigation = computed(() => areValuesEqual(typeof dataSystem.value.system_menu_navigation, 'string') ? JSON.parse(dataSystem.value.system_menu_navigation) : [])
+const navigationMenu = computed(() => navigation)
 </script>
 
 <template>
@@ -56,16 +46,16 @@ const navigation = computed(() => areValuesEqual(typeof dataSystem.value.system_
 
                 <ul class="flex flex-col gap-4">
                     <li
-                        v-for="nav in navigation"
-                        :key="nav.slug"
+                        v-for="nav in navigationMenu"
+                        :key="nav.to"
                     >
                         <NuxtLink
                             class="text-sm/6 font-semibold capitalize flex items-center gap-1 transition-colors hover:text-primary"
-                            :to="nav.slug"
+                            :to="nav.to"
                             active-class="text-primary"
                             @click="isOpen = false"
                         >
-                            {{ nav.title }}
+                            {{ nav.label }}
                         </NuxtLink>
                     </li>
                 </ul>

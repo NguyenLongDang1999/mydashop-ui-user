@@ -50,6 +50,8 @@ export enum PAGE {
 
 export enum ROUTER {
     AUTH_LOGIN = '/dang-nhap',
+    SHOP = '/cua-hang',
+    CHECKOUT = 'thanh-toan',
     USERS_OVERVIEW = '/thong-tin-tai-khoan',
     USERS_ORDER_HISTORY = '/thong-tin-tai-khoan/lich-su-don-hang',
     USERS_CHANGE_PASSWORD = '/thong-tin-tai-khoan/doi-mat-khau',
