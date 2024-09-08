@@ -41,7 +41,8 @@ export const useProductCategoryRetrieve = async () => {
     const searchTemp = reactive<IProductCategoryFilter>(initialSearch(query))
 
     const { data, status } = await useFetchData<IProductCategoryRetrieve>(pathQueryKey(pathKey.id, params.slug), {
-        params: search
+        params: search,
+        key: queryKey.retrieve
     })
 
     // ** Computed

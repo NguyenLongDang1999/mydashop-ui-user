@@ -9,7 +9,7 @@ const props = defineProps<Props>()
 
 // ** useHooks
 const isLoggedIn = useAuth()
-const { pathKey } = useCart()
+const { queryKey: queryKeyCart, pathKey } = useCart()
 const { pathKey: pathKeyWishlist } = useWishlist()
 
 // ** Computed
@@ -18,6 +18,9 @@ const productTypeSingle = computed(() => areValuesEqual(props.product.product_ty
 // ** Methods
 const handleWishlist = () => {
     if (isLoggedIn.value) {
+        const { queryKey } = useHome()
+        const { queryKey: queryKeyProductCategory } = useProductCategory()
+
         if (!props.product.isWishlist) {
             return useFetchData(pathKeyWishlist.create, {
                 method: 'POST',
@@ -25,10 +28,8 @@ const handleWishlist = () => {
                     product_id: props.product.id
                 }
             })
-                .then(async () => {
-                    const { queryKey } = useHome()
-
-                    await refreshNuxtData(queryKey.data)
+                .then(() => {
+                    refreshNuxtData([queryKey.data, queryKeyProductCategory.dataListShop, queryKeyProductCategory.retrieve])
                     useNotification(MESSAGE.WISHLISTS_CREATE)
                 })
                 .catch(() => useNotificationError())
@@ -39,10 +40,8 @@ const handleWishlist = () => {
                     product_id: props.product.id
                 }
             })
-                .then(async () => {
-                    const { queryKey } = useHome()
-
-                    await refreshNuxtData(queryKey.data)
+                .then(() => {
+                    refreshNuxtData([queryKey.data, queryKeyProductCategory.dataListShop, queryKeyProductCategory.retrieve])
                     useNotification(MESSAGE.WISHLISTS_DELETE)
                 })
                 .catch(() => useNotificationError())
@@ -61,7 +60,10 @@ const handleAddToCart = () => {
                 quantity: 1
             }
         })
-            .then(() => useNotification(MESSAGE.CART_CREATE))
+            .then(() => {
+                refreshNuxtData(queryKeyCart.dataList)
+                useNotification(MESSAGE.CART_CREATE)
+            })
             .catch(() => useNotificationError())
     } else {
         return navigateTo(navigateProduct(props.product.slug))

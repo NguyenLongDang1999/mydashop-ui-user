@@ -4,14 +4,17 @@
 const isOpen = ref<boolean>(false)
 
 // ** useHooks
-const { pathKey } = useCart()
+const { queryKey, pathKey } = useCart()
 const { dataList, cartLength, cartTotal } = useCartList()
 
 // ** Methods
 const handleDeleteCart = (product_id: string) => useFetchData(pathQueryKey(pathKey.id, product_id), {
     method: 'DELETE'
 })
-    .then(() => useNotification(MESSAGE.CART_DELETE))
+    .then(() => {
+        refreshNuxtData(queryKey.dataList)
+        useNotification(MESSAGE.CART_DELETE)
+    })
     .catch(() => useNotificationError())
 </script>
 
@@ -86,8 +89,7 @@ const handleDeleteCart = (product_id: string) => useFetchData(pathQueryKey(pathK
                                         icon="i-heroicons-x-mark-20-solid"
                                         size="2xs"
                                         :ui="{ rounded: 'rounded-full' }"
-                                        :loading="isPending"
-                                        @click="handleDeleteCart(cart.product.id)"
+                                        @click="handleDeleteCart(cart.id)"
                                     />
                                 </div>
 

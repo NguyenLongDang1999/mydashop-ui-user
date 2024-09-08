@@ -22,7 +22,7 @@ onMounted(() => {
 
 // ** useHooks
 const isLoggedIn = useAuth()
-const { pathKey } = useCart()
+const { queryKey: queryKeyCart, pathKey } = useCart()
 const { pathKey: pathKeyWishlist } = useWishlist()
 
 // ** Watch
@@ -95,7 +95,10 @@ const handleAddToCart = () => useFetchData(pathKey.index, {
         quantity: quantity.value
     }
 })
-    .then(() => useNotification(MESSAGE.CART_CREATE))
+    .then(() => {
+        refreshNuxtData(queryKeyCart.dataList)
+        useNotification(MESSAGE.CART_CREATE)
+    })
     .catch(() => useNotificationError())
 
 const handleProductAttributeValues = (productAttributeId: string, productAttributeValueId: string) => {
