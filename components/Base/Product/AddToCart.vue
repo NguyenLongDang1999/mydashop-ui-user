@@ -54,6 +54,9 @@ watchEffect(() => {
 // ** Methods
 const handleWishlist = () => {
     if (isLoggedIn.value) {
+        const { queryKey } = useHome()
+        const { queryKey: queryKeyProduct } = useProduct()
+
         if (!props.product.isWishlist) {
             return useFetchData(pathKeyWishlist.create, {
                 method: 'POST',
@@ -61,10 +64,11 @@ const handleWishlist = () => {
                     product_id: props.product.id
                 }
             })
-                .then(async () => {
-                    const { queryKey } = useHome()
-
-                    await refreshNuxtData(queryKey.data)
+                .then(() => {
+                    refreshNuxtData([
+                        queryKey.data,
+                        queryKeyProduct.retrieve
+                    ])
                     useNotification(MESSAGE.WISHLISTS_CREATE)
                 })
                 .catch(() => useNotificationError())
@@ -75,10 +79,11 @@ const handleWishlist = () => {
                     product_id: props.product.id
                 }
             })
-                .then(async () => {
-                    const { queryKey } = useHome()
-
-                    await refreshNuxtData(queryKey.data)
+                .then(() => {
+                    refreshNuxtData([
+                        queryKey.data,
+                        queryKeyProduct.retrieve
+                    ])
                     useNotification(MESSAGE.WISHLISTS_DELETE)
                 })
                 .catch(() => useNotificationError())
