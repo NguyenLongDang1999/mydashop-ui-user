@@ -1,14 +1,21 @@
 <script setup lang="ts">
 
 // ** useHooks
-const { isPending, mutateAsync } = useAuthChangePassword()
+const { pathKey } = useAuthState()
 
-const { handleSubmit } = useForm<IAuthChangePasswordForm>({
+const { handleSubmit, isSubmitting } = useForm<IAuthChangePasswordForm>({
     validationSchema: authChangePasswordSchema
 })
 
 // ** Methods
-const onSubmit = handleSubmit(values => mutateAsync(values))
+const onSubmit = handleSubmit(values =>
+    useFetchData(pathKey.changePassword, {
+        method: 'POST',
+        body: values
+    })
+        .then(() => useNotification())
+        .catch(() => useNotificationError())
+)
 </script>
 
 <template>
@@ -72,7 +79,7 @@ const onSubmit = handleSubmit(values => mutateAsync(values))
                                         <UButton
                                             type="submit"
                                             size="md"
-                                            :loading="isPending"
+                                            :loading="isSubmitting"
                                         >
                                             Xác Nhận
                                         </UButton>
