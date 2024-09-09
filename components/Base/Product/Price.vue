@@ -3,7 +3,7 @@
 // ** Props & Emits
 interface Props {
     price: number
-    sellingPrice: string
+    sellingPrice: number
 }
 
 defineProps<Props>()
@@ -13,11 +13,11 @@ defineProps<Props>()
     <span
         class="font-semibold text-base text-primary"
         v-bind="$attrs"
-        :class="!areValuesEqual(sellingPrice, formatCurrency(price)) ? 'pr-3' : ''"
-    >{{ sellingPrice }}</span>
+        :class="!areValuesEqual(sellingPrice, price) ? 'pr-3' : ''"
+    >{{ formatCurrency(sellingPrice) }}</span>
 
     <span
-        v-if="!areValuesEqual(sellingPrice, formatCurrency(price))"
+        v-if="!areValuesEqual(sellingPrice, price)"
         class="font-normal text-sm text-gray-300 line-through"
     >{{ formatCurrency(price) }}</span>
 </template>
