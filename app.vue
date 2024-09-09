@@ -66,7 +66,11 @@ useServerSeoMeta({
         <NuxtPage />
     </NuxtLayout>
 
-    <UNotifications />
+    <UNotifications
+        :ui="{
+            strategy: 'override',
+        }"
+    />
 </template>
 
 <style>
