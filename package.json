@@ -12,7 +12,7 @@
   },
   "dependencies": {
     "@vee-validate/valibot": "^4.13.2",
-    "nuxt": "^3.12.4",
+    "nuxt": "^3.13.1",
     "nuxt-swiper": "^1.2.2",
     "valibot": "^0.37.0",
     "vue": "latest"
