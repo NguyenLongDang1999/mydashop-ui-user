@@ -22,6 +22,10 @@ export default defineAppConfig({
                     label: 'Không tìm thấy kết quả nào!'
                 }
             }
+        },
+        notifications: {
+            position: 'top-0 end-0',
+            width: 'w-full sm:w-80'
         }
     }
 })

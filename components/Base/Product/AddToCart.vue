@@ -155,7 +155,7 @@ const isSelected = (productAttributeId: string, productAttributeValueId: string)
 
         <BaseProductPrice
             :price="Number(result?.price)"
-            :selling-price="formatSellingPrice(result).toString()"
+            :selling-price="Number(result?.selling_price)"
             class="text-lg"
         />
     </div>

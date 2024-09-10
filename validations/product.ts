@@ -21,9 +21,10 @@ export const product = v.object({
     product_variant_id: v.string(),
     product_type: v.number(),
     isWishlist: v.boolean(),
-    price: v.string(),
-    special_price: v.string(),
-    special_price_type: v.number()
+    price: v.number(),
+    special_price: v.number(),
+    special_price_type: v.number(),
+    selling_price: v.number()
 })
 
 export const productCollection = v.object({
@@ -34,9 +35,10 @@ export const productCollection = v.object({
 
 export const productVariant = v.object({
     id: v.string(),
-    price: v.string(),
-    special_price: v.string(),
+    price: v.number(),
+    special_price: v.number(),
     special_price_type: v.number(),
+    selling_price: v.number(),
     productVariantAttributeValues: v.array(
         v.object({
             productAttributeValues: v.object({

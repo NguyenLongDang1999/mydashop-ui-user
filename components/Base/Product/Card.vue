@@ -132,8 +132,8 @@ const handleAddToCart = () => {
 
             <div class="flex items-center">
                 <BaseProductPrice
-                    :price="Number(product.price)"
-                    :selling-price="formatSellingPrice(product).toString()"
+                    :price="product.price"
+                    :selling-price="product.selling_price"
                 />
             </div>
 
