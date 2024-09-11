@@ -8,7 +8,6 @@ const { data } = useNuxtData<ICart>(queryKey.dataList)
 const dataList = computed(() => data.value as ICart)
 const isFetching = computed(() => !dataList.value)
 const cartLength = computed(() => dataList.value?.cartItem && dataList.value?.cartItem.length)
-const cartQuantity = computed(() => cartLength.value ? dataList.value?.cartItem.length : 0)
 const cartTotal = computed(() => cartLength.value && dataList.value?.cartItem.reduce((acc, item) => acc + (formatSellingPrice(item.product, item.quantity, false) as number), 0))
 </script>
 
