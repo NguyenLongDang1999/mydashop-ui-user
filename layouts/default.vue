@@ -39,5 +39,5 @@ onBeforeUnmount(() => window.removeEventListener('scroll', handleScroll))
         @click="scrollToTop"
     />
 
-    <LazyLayoutTheFooter />
+    <!-- <LazyLayoutTheFooter /> -->
 </template>

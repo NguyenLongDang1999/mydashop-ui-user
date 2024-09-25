@@ -100,7 +100,8 @@ const onSubmit = handleSubmit(values =>
 
                                 <div class="my-3 flex gap-2 justify-center">
                                     <BaseIconFacebook />
-                                    <BaseIconGoogle />
+                                    <!-- <BaseIconGoogle /> -->
+                                    <AuthPageLoginGoogle />
                                 </div>
 
                                 <span>Nếu chưa có tài khoản?</span>

@@ -1,5 +1,8 @@
 <template>
-    <div class="w-10 h-10 flex items-center justify-center rounded-full text-base bg-red-500">
+    <div
+        class="w-10 h-10 cursor-pointer flex items-center justify-center rounded-full text-base bg-red-500"
+        v-bind="$attrs"
+    >
         <svg
             xmlns="http://www.w3.org/2000/svg"
             width="16"

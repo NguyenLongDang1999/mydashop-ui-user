@@ -8,7 +8,9 @@ const pathKey = {
     profile: `${path.value}/profile`,
     changePassword: `${path.value}/change-password`,
     forgotPassword: `${path.value}/forgot-password`,
-    resetPassword: `${path.value}/reset-password`
+    resetPassword: `${path.value}/reset-password`,
+    loginGoogle: `${path.value}/google`,
+    loginGoogleCallback: `${path.value}/google/callback`
 }
 
 export const useAuthState = () => {
