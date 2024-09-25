@@ -25,7 +25,10 @@ const { dataTable } = useWishlistDataList()
                             Sản phẩm yêu thích
                         </h2>
 
-                        <div class="grid grid-cols-12 gap-4">
+                        <div
+                            v-if="dataTable.length"
+                            class="grid grid-cols-12 gap-4"
+                        >
                             <BaseProductCard
                                 v-for="product in dataTable"
                                 :key="product.id"
@@ -33,6 +36,8 @@ const { dataTable } = useWishlistDataList()
                                 class="lg:col-span-4 md:col-span-4 sm:col-span-6 col-span-6"
                             />
                         </div>
+
+                        <ProductCategoryPageEmpty v-else />
                     </div>
                 </div>
             </section>

@@ -19,7 +19,7 @@ export default function () {
 
 export const useWishlistDataList = () => {
     // ** useHooks
-    const { data, status } = useFetchData(pathKey.index, {
+    const { data, status } = useFetchData<IWishlistDataList>(pathKey.index, {
         key: queryKey.dataTable
     })
 
