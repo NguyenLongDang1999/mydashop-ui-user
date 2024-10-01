@@ -3,6 +3,7 @@
 // ** Props & Emits
 interface Props {
     dataList: ICart
+    cartTotal: number
 }
 
 const props = defineProps<Props>()
@@ -79,7 +80,7 @@ onBeforeRouteLeave(() => {
 </script>
 
 <template>
-    <div class="flex border border-gray-200 dark:border-gray-700 relative not-prose rounded-md bg-white dark:bg-gray-900 overflow-x-auto">
+    <div class="flex flex-col border border-gray-200 dark:border-gray-700 relative not-prose rounded-md bg-white dark:bg-gray-900 overflow-x-auto">
         <UTable
             class="w-full"
             :rows="dataList.cartItem"
@@ -125,7 +126,7 @@ onBeforeRouteLeave(() => {
 
             <template #price-data="{ row }: { row: ICartItem }">
                 <span class="font-semibold sm:text-lg text-primary text-base">
-                    {{ formatSellingPrice(row.product) }}
+                    {{ formatCurrency(row.product.selling_price) }}
                 </span>
             </template>
 
@@ -138,10 +139,17 @@ onBeforeRouteLeave(() => {
 
             <template #total-data="{ row }: { row: ICartItem }">
                 <span class="font-semibold sm:text-lg text-primary text-base">
-                    {{ formatSellingPrice(row.product, quantity[row.id]) }}
+                    {{ formatCurrency(row.product.selling_price * quantity[row.id]) }}
                 </span>
             </template>
         </UTable>
+
+        <div class="flex justify-end items-center px-3 py-3.5 border-t border-gray-200 dark:border-gray-700 gap-2">
+            <span class="uppercase font-semibold text-base">Tổng tiền:</span>
+            <span class="font-semibold text-lg text-primary mr-10">
+                {{ formatCurrency(Number(cartTotal)) }}
+            </span>
+        </div>
     </div>
 
     <div class="mt-4 flex justify-between">
@@ -155,7 +163,7 @@ onBeforeRouteLeave(() => {
             Tiếp Tục Mua Sắm
         </UButton>
 
-        <div>
+        <div class="flex gap-1">
             <UButton
                 label="Button"
                 color="red"
@@ -163,6 +171,13 @@ onBeforeRouteLeave(() => {
                 @click="handleDeleteCart(true, dataList.id)"
             >
                 Xóa Giỏ Hàng
+            </UButton>
+
+            <UButton
+                size="md"
+                :to="ROUTER.CHECKOUT"
+            >
+                Thanh Toán
             </UButton>
         </div>
     </div>

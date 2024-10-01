@@ -121,7 +121,7 @@ const handleDeleteCart = (product_id: string) => useFetchData(pathQueryKey(pathK
                                         </div>
 
 
-                                        <span class="font-semibold sm:text-lg text-primary text-base">{{ cart.quantity }} x {{ formatSellingPrice(cart.product) }}</span>
+                                        <span class="font-semibold sm:text-lg text-primary text-base">{{ cart.quantity }} x {{ formatCurrency(cart.product.selling_price) }}</span>
                                         <span class="font-normal sm:text-base text-sm text-gray-300 line-through pl-3">{{ formatCurrency(Number(cart.product.price)) }}</span>
                                     </div>
                                 </div>
@@ -148,7 +148,7 @@ const handleDeleteCart = (product_id: string) => useFetchData(pathQueryKey(pathK
                         >
                             <div class="flex justify-between">
                                 <span class="uppercase font-semibold text-lg">Tổng tiền:</span>
-                                <span class="text-lg">{{ formatCurrency(cartTotal) }}</span>
+                                <span class="text-lg">{{ formatCurrency(Number(cartTotal)) }}</span>
                             </div>
 
                             <div class="flex gap-2 mt-3">

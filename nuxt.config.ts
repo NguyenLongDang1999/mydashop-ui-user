@@ -44,6 +44,7 @@ export default defineNuxtConfig({
     },
     routeRules: {
         '/': { prerender: true },
+        '/thanh-toan': { ssr: false },
         '/thong-tin-tai-khoan': { ssr: false }
     }
 })

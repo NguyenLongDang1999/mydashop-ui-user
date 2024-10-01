@@ -40,6 +40,11 @@ export default {
             component: () => import('~/pages/carts/index.vue').then(r => r.default || r)
         },
         {
+            name: 'checkout-pages',
+            path: '/thanh-toan',
+            component: () => import('~/pages/checkout/index.vue').then(r => r.default || r)
+        },
+        {
             name: 'auth-forgot-password',
             path: '/quen-mat-khau',
             component: () => import('~/pages/auth/forgot-password.vue').then(r => r.default || r)

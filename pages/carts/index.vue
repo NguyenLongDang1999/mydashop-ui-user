@@ -8,7 +8,7 @@ const { data } = useNuxtData<ICart>(queryKey.dataList)
 const dataList = computed(() => data.value as ICart)
 const isFetching = computed(() => !dataList.value)
 const cartLength = computed(() => dataList.value?.cartItem && dataList.value?.cartItem.length)
-const cartTotal = computed(() => cartLength.value && dataList.value?.cartItem.reduce((acc, item) => acc + (formatSellingPrice(item.product, item.quantity, false) as number), 0))
+const cartTotal = computed(() => cartLength.value && dataList.value?.cartItem.reduce((acc, item) => acc + (item.product.selling_price * item.quantity), 0))
 </script>
 
 <template>
@@ -31,18 +31,15 @@ const cartTotal = computed(() => cartLength.value && dataList.value?.cartItem.re
                     v-if="!isFetching"
                     class="grid gap-4 grid-cols-12 mt-10"
                 >
-                    <template v-if="cartLength">
-                        <div class="lg:col-span-9 col-span-12">
-                            <CartPageList :data-list="dataList" />
-                        </div>
-
-                        <div class="lg:col-span-3 sm:col-span-6 col-span-12">
-                            <CartPageCoupon
-                                :data-list="dataList"
-                                :cart-total="cartTotal"
-                            />
-                        </div>
-                    </template>
+                    <div
+                        v-if="cartLength"
+                        class="col-span-12"
+                    >
+                        <CartPageList
+                            :data-list="dataList"
+                            :cart-total="cartTotal"
+                        />
+                    </div>
 
                     <div
                         v-else
@@ -69,18 +66,6 @@ const cartTotal = computed(() => cartLength.value && dataList.value?.cartItem.re
                         </div>
                     </div>
                 </div>
-
-                <template v-else>
-                    <div class="mt-10">
-                        <div class="space-y-2 mt-2">
-                            <USkeleton
-                                v-for="item in 12"
-                                :key="item"
-                                class="h-3 w-full"
-                            />
-                        </div>
-                    </div>
-                </template>
             </section>
         </UContainer>
     </main>
