@@ -54,16 +54,7 @@ const updateDefaultOpen = (_categoryList: IProductCategory[]): boolean => {
 
 const handleFilter = () => {
     _assign(search, searchTemp)
-
-    navigateTo({
-        path: route.path,
-        query: { ...search }
-    })
-
-    if (props.closeFilter) {
-        props.closeFilter()
-    }
-
+    if (props.closeFilter) props.closeFilter()
     scrollToTop()
 }
 

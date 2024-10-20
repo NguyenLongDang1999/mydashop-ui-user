@@ -24,8 +24,15 @@ export const options = v.object({
     label: v.string()
 })
 
+export const sortOptions = v.object({
+    id: v.string(),
+    label: v.string()
+})
+
 // ** Types
 export type IOptions = v.InferInput<typeof options>
+
+export type ISortOptions = v.InferInput<typeof sortOptions>
 
 export type IPagination = v.InferInput<typeof paginationSchema>
 

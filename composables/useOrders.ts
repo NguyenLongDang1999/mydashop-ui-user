@@ -13,35 +13,35 @@ const pathKey = {
     loginGoogleCallback: `${path.value}/google/callback`
 }
 
-export const useAuthState = () => {
-    return {
-        pathKey
-    }
-}
+// export const useAuthState = () => {
+//     return {
+//         pathKey
+//     }
+// }
 
-export const useAuth = () => useState<boolean>('isLoggedIn', () => false)
+// export const useAuth = () => useState<boolean>('isLoggedIn', () => false)
 
-export const useAuthProfile = () => {
-    // ** useHooks
-    const isLoggedIn = useAuth()
+// export const useAuthProfile = () => {
+//     // ** useHooks
+//     const isLoggedIn = useAuth()
 
-    const { data, execute } = useFetchData(pathKey.profile, {
-        lazy: true,
-        server: false,
-        immediate: false
-    })
+//     const { data, execute } = useFetchData(pathKey.profile, {
+//         lazy: true,
+//         server: false,
+//         immediate: false
+//     })
 
-    // ** Computed
-    const profile = computed(() => data.value as IAuthProfile)
+//     // ** Computed
+//     const profile = computed(() => data.value as IAuthProfile)
 
-    // ** Watch
-    watch(isLoggedIn, loggedIn => {
-        if (loggedIn) {
-            execute()
-        }
-    }, { immediate: true })
+//     // ** Watch
+//     watch(isLoggedIn, loggedIn => {
+//         if (loggedIn) {
+//             execute()
+//         }
+//     }, { immediate: true })
 
-    return {
-        data: profile
-    }
-}
+//     return {
+//         data: profile
+//     }
+// }

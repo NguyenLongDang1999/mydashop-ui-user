@@ -21,6 +21,8 @@ if (!data.value) {
     })
 }
 
+useProductCategoryFilter(search)
+
 // ** Methods
 const valueSystem = (key: string) => getValueBySlug(key, metadata.value?.system)
 
@@ -50,11 +52,10 @@ provide('searchTemp', searchTemp)
 
 <template>
     <main>
-        <BaseBreadcrumbsCategoryNested
+        <BaseBreadcrumbs
             v-once
             :title="data.name"
-            :category-id="data.id"
-            page-category
+            :breadcrumb="data.breadcrumb"
         />
 
         <UContainer>

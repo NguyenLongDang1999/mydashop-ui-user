@@ -7,8 +7,8 @@ import { ratingOption } from '@/utils/options'
 import type { AccordionItem } from '#ui/types'
 
 // ** Data
-const searchTemp = inject('searchTemp') as IProductCategoryFilter
 const items: AccordionItem[] = [{ label: 'Đánh giá' }]
+const searchTemp = inject('searchTemp') as IProductCategoryFilter
 </script>
 
 <template>

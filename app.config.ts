@@ -1,6 +1,9 @@
 export default defineAppConfig({
     ui: {
         primary: 'blue',
+        breadcrumb: {
+            label: 'capitalize'
+        },
         formGroup: {
             label: {
                 base: 'capitalize'

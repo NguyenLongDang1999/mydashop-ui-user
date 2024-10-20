@@ -11,6 +11,8 @@ const {
     searchTemp
 } = await useProductCategoryListShop()
 
+useProductCategoryFilter(search)
+
 provide('product', {
     isFetching,
     dataTable,

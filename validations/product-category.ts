@@ -29,12 +29,13 @@ export const productCategoryRetrieve = v.object({
     product: product,
     productBrands: v.array(productBrand),
     productAttributes: v.array(productAttribute),
-    aggregations: v.number()
+    aggregations: v.number(),
+    breadcrumb: v.array(productCategoryBreadcrumb)
 })
 
 export const productCategoryFilter = v.object({
     ...paginationSchema.entries,
-    sort: v.optional(v.number()),
+    sort: v.optional(v.string()),
     productBrands: v.optional(v.array(v.string())),
     productRating: v.optional(v.array(v.string())),
     productAttributes: v.optional(v.array(v.string()))

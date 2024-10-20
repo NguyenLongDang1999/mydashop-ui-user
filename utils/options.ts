@@ -1,31 +1,31 @@
-export const sortOption: IOptions[] = [
+export const sortOption: ISortOptions[] = [
     {
-        id: 1,
+        id: 'created_at-desc',
         label: 'Mặc định'
     },
     {
-        id: 2,
+        id: 'created_at-asc',
         label: 'Ngày cũ nhất'
     },
     {
-        id: 3,
+        id: 'name-desc',
         label: 'Tên: A - Z'
     },
     {
-        id: 4,
+        id: 'name-asc',
         label: 'Tên: Z - A'
     },
     {
-        id: 5,
+        id: 'price-asc',
         label: 'Giá: Thấp - cao'
     },
     {
-        id: 6,
+        id: 'price-desc',
         label: 'Giá: Cao - thấp'
     }
 ]
 
-export const paginationOption: number[] = [12, 24, 36, 48]
+export const paginationOption: string[] = ['12', '24', '36', '48']
 
 export const ratingOption: IOptions[] = [
     {

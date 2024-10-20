@@ -30,10 +30,10 @@ useSEO({
 
 <template>
     <main>
-        <BaseBreadcrumbsCategoryNested
+        <BaseBreadcrumbs
             v-once
             :title="data.name"
-            :category-id="data.productCategory.id"
+            :breadcrumb="data.breadcrumb"
         />
 
         <UContainer>

@@ -49,6 +49,7 @@ export enum PAGE {
 }
 
 export enum ROUTER {
+    HOME = '/',
     AUTH_LOGIN = '/dang-nhap',
     SHOP = '/cua-hang',
     CHECKOUT = 'thanh-toan',

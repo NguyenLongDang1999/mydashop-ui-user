@@ -84,6 +84,24 @@ export const useProductCategoryListShop = async () => {
     }
 }
 
+export const useProductCategoryFilter = (search: IProductCategoryFilter) => {
+    // ** useHooks
+    const route = useRoute()
+
+    // ** Watch
+    watch(search, () => navigateTo({
+        path: route.path,
+        query: {
+            page: _eq(_toNumber(search.page), PAGE.CURRENT) ? undefined : search.page,
+            pageSize: _eq(_toNumber(search.pageSize), PAGE.SIZE) ? undefined : search.pageSize,
+            sort: _eq(search.sort?.toString(), _first(sortOption)?.id) ? undefined : search.sort,
+            productRating: !_size(search.productRating) ? undefined : search.productRating,
+            productBrands: !_size(search.productBrands) ? undefined : search.productBrands,
+            productAttributes: !_size(search.productAttributes) ? undefined : search.productAttributes
+        }
+    }))
+}
+
 const parseQueryArray = (value: LocationQueryValue | LocationQueryValue[]): string[] => {
     if (!value) return []
 
@@ -91,9 +109,9 @@ const parseQueryArray = (value: LocationQueryValue | LocationQueryValue[]): stri
 }
 
 const initialSearch = (query: LocationQuery) => ({
-    sort: Number(query.sort) || sortOption[0].id,
-    pageSize: Number(query.pageSize) || paginationOption[0],
     page: Number(query.page) || PAGE.CURRENT,
+    pageSize: query.pageSize || PAGE.SIZE.toString(),
+    sort: query.sort?.toString() || sortOption[0].id,
     productAttributes: parseQueryArray(query.productAttributes),
     productBrands: parseQueryArray(query.productBrands),
     productRating: parseQueryArray(query.productRating)

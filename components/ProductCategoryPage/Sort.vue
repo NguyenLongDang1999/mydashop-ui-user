@@ -7,12 +7,9 @@ const emits = defineEmits(['categoryView'])
 const isList = ref<boolean>(false)
 const search = inject('search') as IProductCategoryFilter
 
-// ** useHooks
-const route = useRoute()
-
 // ** Computed
-const sort = computed(() => sortOption.find(_v => areValuesEqual(_v.id, search.sort as number)))
-const paginate = computed(() => paginationOption.find(_v => areValuesEqual(_v, search.pageSize as number)))
+const sort = computed(() => sortOption.find(_v => areValuesEqual(_v.id, search.sort as string)))
+const paginate = computed(() => paginationOption.find(_v => areValuesEqual(Number(_v), search.pageSize as number)))
 
 // ** Watch
 watch(isList, val => emits('categoryView', val))
@@ -51,13 +48,6 @@ watch(isList, val => emits('categoryView', val))
                     :options="sortOption"
                     value-attribute="id"
                     class="w-40"
-                    @update:model-value="navigateTo({
-                        path: route.path,
-                        query: {
-                            ...search,
-                            sort: search.sort
-                        }
-                    })"
                 >
                     <template #label>
                         {{ sort?.label }}
@@ -74,14 +64,6 @@ watch(isList, val => emits('categoryView', val))
                     v-model="search.pageSize"
                     :options="paginationOption"
                     class="w-20"
-                    @update:model-value="navigateTo({
-                        path: route.path,
-                        query: {
-                            ...search,
-                            page: PAGE.CURRENT,
-                            pageSize: search.pageSize
-                        }
-                    })"
                 >
                     <template #label>
                         {{ paginate }}

@@ -32,8 +32,8 @@ export const useHomeData = async () => {
     // ** Computed
     const slider = computed(() => data.value?.slider || [])
     const productFlashDeals = computed(() => data.value?.product_flash_deals as IProductFlashDeals)
-    const productCategories = computed(() => data.value?.product_categories_popular || [])
-    const productCollection = computed(() => data.value?.product_collection || [])
+    const productCategories = computed(() => data.value?.product_categories_popular as IProductCategory[])
+    const productCollection = computed(() => data.value?.product_collection as IProductCollection[])
 
     return {
         slider,

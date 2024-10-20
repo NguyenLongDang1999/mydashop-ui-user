@@ -1,6 +1,3 @@
-// ** Types Imports
-import type { IProductDetail } from '~/types/product.type'
-
 // ** State
 const path = ref<string>(ROUTE.PRODUCT)
 
@@ -21,11 +18,11 @@ export default function () {
 export const useProductRetrieve = async () => {
     // ** useHooks
     const { params, path: routePath } = useRoute()
-    const { data } = await useFetchData<IProductDetail>(pathQueryKey(pathKey.id, params.slug))
+    const { data } = await useFetchData<IProductRetrieve>(pathQueryKey(pathKey.id, params.slug))
 
     return {
         path: routePath,
         params,
-        data: computed(() => data.value as IProductDetail)
+        data: computed(() => data.value as IProductRetrieve)
     }
 }
