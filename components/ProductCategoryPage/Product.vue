@@ -10,7 +10,7 @@ interface Props {
 defineProps<Props>()
 
 // ** Data
-const { dataTable } = inject('product') as ICrudTableOptions<IProduct>
+const { dataTable, dataAggregations } = inject('product') as ICrudTableOptions<IProduct>
 
 // ** Data
 const isList = ref<boolean>(false)
@@ -63,6 +63,12 @@ const isOpen = ref<boolean>(false)
                 </UCard>
             </USlideover>
         </div>
+
+        <ProductCategoryPageControlSelected
+            :category-brand="categoryBrand"
+            :category-attribute="categoryAttribute"
+            :data-aggregations="dataAggregations"
+        />
 
         <ProductCategoryPageSort @category-view="val => isList = val" />
 

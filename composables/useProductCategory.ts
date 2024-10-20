@@ -112,7 +112,7 @@ const initialSearch = (query: LocationQuery) => ({
     page: Number(query.page) || PAGE.CURRENT,
     pageSize: query.pageSize || PAGE.SIZE.toString(),
     sort: query.sort?.toString() || sortOption[0].id,
-    productAttributes: parseQueryArray(query.productAttributes),
+    productRating: parseQueryArray(query.productRating),
     productBrands: parseQueryArray(query.productBrands),
-    productRating: parseQueryArray(query.productRating)
+    productAttributes: parseQueryArray(query.productAttributes)
 })
